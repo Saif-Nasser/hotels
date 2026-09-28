@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   Sparkles, Search, MapPin, Star, Heart, Eye, Footprints, 
   ArrowRight, ShieldCheck, Moon, X, Check, Calendar, Users, 
-  ChevronRight, Crown, Cpu, Menu
+  ChevronRight, Crown, Cpu
 } from 'lucide-react';
 
 const MODERN_HOTELS = [
@@ -100,7 +100,6 @@ export default function ModernDesignDemo() {
   const [selectedCity, setSelectedCity] = useState('all');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedHotel, setSelectedHotel] = useState<typeof MODERN_HOTELS[0] | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [likesCount, setLikesCount] = useState<{ [key: string]: number }>({
     '1': 148,
     '2': 92,
@@ -125,31 +124,33 @@ export default function ModernDesignDemo() {
   });
 
   return (
-    <div className="min-h-screen bg-[#fafaf9] text-stone-900 font-sans selection:bg-amber-400 selection:text-stone-950">
+    <div className="min-h-screen bg-[#fafaf9] text-stone-900 font-sans selection:bg-amber-400 selection:text-stone-950 overflow-x-hidden w-full">
       
-      {/* SINGLE UNIFIED TOP NAVIGATION (Clean, High-Contrast, 100% Functional) */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+      {/* 100% RESPONSIVE CLEAN NAVBAR */}
+      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm w-full">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          
+          {/* Main Top Row */}
+          <div className="flex items-center justify-between h-14 sm:h-20 gap-2">
             
             {/* Logo */}
-            <Link href="/demo/modern" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-stone-950 flex items-center justify-center text-amber-400 font-bold border border-amber-400/40 shadow-sm group-hover:scale-105 transition-transform">
+            <Link href="/demo/modern" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-stone-950 flex items-center justify-center text-amber-400 font-bold text-sm sm:text-base border border-amber-400/40 shadow-sm">
                 H
               </div>
-              <div>
-                <span className="text-lg sm:text-xl font-bold tracking-tight text-stone-950 font-serif block">
-                  HARAMAIN <span className="text-amber-600 font-sans text-xs font-semibold uppercase tracking-wider">MODERN</span>
+              <div className="leading-tight">
+                <span className="text-sm sm:text-lg font-bold tracking-tight text-stone-950 font-serif block">
+                  HARAMAIN <span className="text-amber-600 font-sans text-[10px] sm:text-xs font-semibold uppercase">MODERN</span>
                 </span>
-                <span className="text-[10px] text-stone-500 block -mt-0.5">5-Star Sanctuary Stays</span>
+                <span className="text-[9px] sm:text-[10px] text-stone-500 hidden sm:block">5-Star Stays</span>
               </div>
             </Link>
 
-            {/* Center: City Filter Tabs */}
-            <div className="hidden md:flex items-center gap-2 bg-stone-100 p-1 rounded-xl border border-stone-200">
+            {/* Desktop Center: City Filter Tabs */}
+            <div className="hidden md:flex items-center gap-1.5 bg-stone-100 p-1 rounded-xl border border-stone-200">
               <button
                 onClick={() => setSelectedCity('all')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedCity === 'all'
                     ? 'bg-stone-950 text-white shadow'
                     : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
@@ -159,7 +160,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedCity('Makkah')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
                   selectedCity === 'Makkah'
                     ? 'bg-stone-950 text-white shadow'
                     : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
@@ -169,7 +170,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedCity('Madinah')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
                   selectedCity === 'Madinah'
                     ? 'bg-stone-950 text-white shadow'
                     : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
@@ -179,61 +180,81 @@ export default function ModernDesignDemo() {
               </button>
             </div>
 
-            {/* Right: Design Concepts Switcher */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-[11px] text-stone-400 font-bold uppercase tracking-wider mr-1 hidden lg:block">Concepts:</span>
-              
+            {/* Right: Design Concepts Switcher (Compact, Never Overflows) */}
+            <div className="flex items-center bg-stone-100 p-0.5 sm:p-1 rounded-xl border border-stone-200">
               <Link
                 href="/demo/modern"
-                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-stone-950 shadow-sm flex items-center gap-1"
+                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold bg-amber-400 text-stone-950 shadow-sm flex items-center gap-1"
+                title="Modern Concept"
               >
-                <Sparkles className="w-3.5 h-3.5" /> Modern
+                <Sparkles className="w-3 h-3 text-stone-950" />
+                <span>Modern</span>
               </Link>
               
               <Link
                 href="/demo/classic"
-                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors flex items-center gap-1"
+                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-stone-600 hover:text-stone-950 transition-colors flex items-center gap-1"
+                title="Classic Concept"
               >
-                <Crown className="w-3.5 h-3.5 text-amber-600" /> Classic
+                <Crown className="w-3 h-3 text-amber-600" />
+                <span>Classic</span>
               </Link>
 
               <Link
                 href="/demo/futuristic"
-                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors flex items-center gap-1"
+                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-stone-600 hover:text-stone-950 transition-colors flex items-center gap-1"
+                title="Futuristic Concept"
               >
-                <Cpu className="w-3.5 h-3.5 text-amber-600" /> Futuristic
+                <Cpu className="w-3 h-3 text-amber-600" />
+                <span className="hidden xs:inline">Futuristic</span>
+                <span className="xs:hidden">Sci-Fi</span>
               </Link>
             </div>
 
           </div>
-        </div>
 
-        {/* Mobile City Tab Bar */}
-        <div className="md:hidden flex items-center justify-around border-t border-stone-200 px-3 py-2 bg-stone-50 text-xs font-bold">
-          <button
-            onClick={() => setSelectedCity('all')}
-            className={`px-3 py-1 rounded-md transition-colors ${selectedCity === 'all' ? 'bg-stone-950 text-white' : 'text-stone-600'}`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setSelectedCity('Makkah')}
-            className={`px-3 py-1 rounded-md transition-colors ${selectedCity === 'Makkah' ? 'bg-stone-950 text-white' : 'text-stone-600'}`}
-          >
-            Makkah
-          </button>
-          <button
-            onClick={() => setSelectedCity('Madinah')}
-            className={`px-3 py-1 rounded-md transition-colors ${selectedCity === 'Madinah' ? 'bg-stone-950 text-white' : 'text-stone-600'}`}
-          >
-            Madinah
-          </button>
+          {/* Mobile Bottom Row: Clean 100% Full-Width City Filter Segments */}
+          <div className="md:hidden pb-2.5 pt-0.5">
+            <div className="grid grid-cols-3 gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200 w-full text-center">
+              <button
+                onClick={() => setSelectedCity('all')}
+                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                  selectedCity === 'all'
+                    ? 'bg-stone-950 text-white shadow-sm'
+                    : 'text-stone-600 hover:text-stone-950'
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setSelectedCity('Makkah')}
+                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                  selectedCity === 'Makkah'
+                    ? 'bg-stone-950 text-white shadow-sm'
+                    : 'text-stone-600 hover:text-stone-950'
+                }`}
+              >
+                Makkah
+              </button>
+              <button
+                onClick={() => setSelectedCity('Madinah')}
+                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                  selectedCity === 'Madinah'
+                    ? 'bg-stone-950 text-white shadow-sm'
+                    : 'text-stone-600 hover:text-stone-950'
+                }`}
+              >
+                Madinah
+              </button>
+            </div>
+          </div>
+
         </div>
       </nav>
 
       {/* Split Editorial Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-12 sm:pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-10 sm:pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
           
           <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-stone-800 text-xs font-semibold">
@@ -241,7 +262,7 @@ export default function ModernDesignDemo() {
               <span>Modern Minimalist Luxury</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-normal text-stone-950 tracking-tight leading-tight font-serif">
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl font-normal text-stone-950 tracking-tight leading-tight font-serif">
               A serene sanctuary facing the <span className="italic underline decoration-amber-400 decoration-2">Holy Sanctuary</span>.
             </h1>
 
@@ -250,10 +271,10 @@ export default function ModernDesignDemo() {
             </p>
 
             {/* Quick Filter Pill Buttons */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-2 pt-1">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-1.5 sm:gap-2 pt-1">
               <button
                 onClick={() => setActiveTab('all')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
                   activeTab === 'all'
                     ? 'bg-stone-950 text-white shadow-md'
                     : 'bg-white border border-stone-300 text-stone-700 hover:border-stone-900'
@@ -263,7 +284,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setActiveTab('kaaba')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
                   activeTab === 'kaaba'
                     ? 'bg-amber-500 text-stone-950 font-bold shadow-md'
                     : 'bg-white border border-stone-300 text-stone-700 hover:border-stone-900'
@@ -273,7 +294,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setActiveTab('courtyard')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
                   activeTab === 'courtyard'
                     ? 'bg-stone-950 text-white shadow-md'
                     : 'bg-white border border-stone-300 text-stone-700 hover:border-stone-900'
@@ -286,40 +307,40 @@ export default function ModernDesignDemo() {
 
           {/* Featured Editorial Card */}
           <div className="lg:col-span-6 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-stone-900 group">
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-stone-900 group">
               <img
                 src={MODERN_HOTELS[0].image}
                 alt="Fairmont Makkah"
-                className="w-full h-72 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-64 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               
-              <div className="absolute top-4 left-4 flex gap-2">
-                <span className="bg-amber-400 text-stone-950 text-[11px] font-bold px-3 py-1 rounded-full shadow">
+              <div className="absolute top-3 left-3 flex gap-1.5">
+                <span className="bg-amber-400 text-stone-950 text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:py-1 rounded-full shadow">
                   Featured Landmark
                 </span>
-                <span className="bg-white/90 backdrop-blur-md text-stone-900 text-[11px] font-semibold px-3 py-1 rounded-full">
+                <span className="bg-white/90 backdrop-blur-md text-stone-900 text-[10px] sm:text-[11px] font-semibold px-2.5 py-0.5 sm:py-1 rounded-full">
                   0m to Kaaba
                 </span>
               </div>
 
-              <div className="absolute bottom-5 left-5 right-5 text-white space-y-1.5">
+              <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 text-white space-y-1.5">
                 <div className="flex items-center gap-1 text-amber-400 text-xs">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
                   ))}
                   <span className="text-white ml-1 font-semibold text-[11px]">5.0 (1,250 views)</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold font-serif">{MODERN_HOTELS[0].name}</h3>
-                <div className="pt-2 flex items-center justify-between">
+                <h3 className="text-lg sm:text-2xl font-bold font-serif">{MODERN_HOTELS[0].name}</h3>
+                <div className="pt-1.5 flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-stone-400">From</span>{' '}
-                    <span className="text-lg sm:text-xl font-bold text-amber-400">SAR {MODERN_HOTELS[0].price}</span>
-                    <span className="text-xs text-stone-400"> /night</span>
+                    <span className="text-[10px] sm:text-xs text-stone-400">From</span>{' '}
+                    <span className="text-base sm:text-xl font-bold text-amber-400">SAR {MODERN_HOTELS[0].price}</span>
+                    <span className="text-[10px] sm:text-xs text-stone-400"> /night</span>
                   </div>
                   <button
                     onClick={() => setSelectedHotel(MODERN_HOTELS[0])}
-                    className="px-4 py-2 rounded-full bg-white hover:bg-amber-400 hover:text-stone-950 text-stone-950 text-xs font-bold transition-all shadow"
+                    className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white hover:bg-amber-400 hover:text-stone-950 text-stone-950 text-xs font-bold transition-all shadow"
                   >
                     Quick Preview
                   </button>
@@ -332,10 +353,10 @@ export default function ModernDesignDemo() {
       </section>
 
       {/* Modern Hotel Cards Collection */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="flex items-center justify-between mb-6 sm:mb-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14">
+        <div className="flex items-center justify-between mb-5 sm:mb-8">
           <div>
-            <span className="text-xs uppercase tracking-widest text-amber-600 font-bold">Curated Sanctuary Stays</span>
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-amber-600 font-bold">Curated Sanctuary Stays</span>
             <h2 className="text-xl sm:text-3xl font-bold text-stone-950 font-serif mt-0.5">
               Verified 5-Star Accommodations
             </h2>
@@ -345,14 +366,14 @@ export default function ModernDesignDemo() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {filteredHotels.map((hotel) => (
             <div
               key={hotel.id}
               onClick={() => setSelectedHotel(hotel)}
               className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer hover:-translate-y-1"
             >
-              <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-stone-100">
+              <div className="relative h-44 sm:h-52 w-full overflow-hidden bg-stone-100">
                 <img
                   src={hotel.image}
                   alt={hotel.name}
@@ -360,14 +381,14 @@ export default function ModernDesignDemo() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                <div className="absolute top-3 left-3 flex flex-col gap-1 z-10">
+                <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
                   {hotel.hasKaabaView && (
-                    <span className="bg-amber-400 text-stone-950 font-bold text-[10px] px-2.5 py-0.5 rounded-full shadow">
+                    <span className="bg-amber-400 text-stone-950 font-bold text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full shadow">
                       Kaaba View
                     </span>
                   )}
                   {hotel.hasHaramView && !hotel.hasKaabaView && (
-                    <span className="bg-stone-900/90 text-amber-300 font-semibold text-[10px] px-2.5 py-0.5 rounded-full shadow">
+                    <span className="bg-stone-900/90 text-amber-300 font-semibold text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full shadow">
                       Haram View
                     </span>
                   )}
@@ -375,12 +396,12 @@ export default function ModernDesignDemo() {
 
                 <button
                   onClick={(e) => toggleLike(hotel.id, e)}
-                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/90 hover:bg-white text-stone-700 hover:text-rose-600 transition-all shadow"
+                  className="absolute top-2.5 right-2.5 z-10 p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white text-stone-700 hover:text-rose-600 transition-all shadow"
                 >
                   <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
                 </button>
 
-                <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center text-white text-xs">
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 flex justify-between items-center text-white text-xs">
                   <span className="bg-stone-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-medium">
                     {hotel.distanceMeters === 0 ? '0m Courtyard' : `${hotel.distanceMeters}m (${hotel.walkingMin} min)`}
                   </span>
@@ -403,15 +424,15 @@ export default function ModernDesignDemo() {
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
+                <div className="mt-3.5 pt-3 border-t border-stone-100 flex items-center justify-between">
                   <div>
                     <span className="text-[9px] uppercase tracking-wider text-stone-400 block font-semibold">From</span>
                     <span className="text-base sm:text-lg font-bold text-stone-950">SAR {hotel.price}</span>
                     <span className="text-[10px] text-stone-500"> /night</span>
                   </div>
 
-                  <span className="px-3 py-1 rounded-full bg-stone-100 group-hover:bg-stone-950 group-hover:text-amber-400 text-stone-800 text-xs font-bold transition-all flex items-center gap-1">
-                    View <ChevronRight className="w-3.5 h-3.5" />
+                  <span className="px-2.5 py-1 rounded-full bg-stone-100 group-hover:bg-stone-950 group-hover:text-amber-400 text-stone-800 text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1">
+                    View <ChevronRight className="w-3 h-3" />
                   </span>
                 </div>
               </div>
@@ -423,8 +444,8 @@ export default function ModernDesignDemo() {
       {/* Interactive Quick-View Slide Drawer Modal */}
       {selectedHotel && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fade-in p-0 sm:p-4">
-          <div className="w-full max-w-lg bg-white h-full sm:rounded-2xl shadow-2xl overflow-y-auto p-5 sm:p-6 flex flex-col justify-between">
-            <div className="space-y-4 sm:space-y-6">
+          <div className="w-full max-w-lg bg-white h-full sm:rounded-2xl shadow-2xl overflow-y-auto p-4 sm:p-6 flex flex-col justify-between">
+            <div className="space-y-4 sm:space-y-5">
               
               <div className="flex items-center justify-between border-b border-stone-200 pb-3">
                 <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
@@ -438,26 +459,26 @@ export default function ModernDesignDemo() {
                 </button>
               </div>
 
-              <div className="rounded-xl overflow-hidden h-48 sm:h-56 relative">
+              <div className="rounded-xl overflow-hidden h-44 sm:h-56 relative">
                 <img
                   src={selectedHotel.image}
                   alt={selectedHotel.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-3 left-3 bg-stone-950 text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-full">
+                <div className="absolute top-2.5 left-2.5 bg-stone-950 text-amber-400 text-[10px] font-bold px-2.5 py-0.5 rounded-full">
                   {selectedHotel.distanceMeters === 0 ? '0m Direct Courtyard' : `${selectedHotel.distanceMeters}m walk`}
                 </div>
               </div>
 
               <div>
                 <h3 className="text-xl sm:text-2xl font-bold text-stone-950 font-serif">{selectedHotel.name}</h3>
-                <p className="text-xs text-stone-500 mt-1">{selectedHotel.location}</p>
+                <p className="text-xs text-stone-500 mt-0.5">{selectedHotel.location}</p>
                 <p className="text-xs sm:text-sm text-stone-700 mt-2 leading-relaxed">{selectedHotel.description}</p>
               </div>
 
               {/* Pilgrim Amenities */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 mb-2">Pilgrim Amenities</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 mb-1.5">Pilgrim Amenities</h4>
                 <div className="grid grid-cols-2 gap-1.5">
                   {selectedHotel.features.map((feat, i) => (
                     <div key={i} className="flex items-center gap-1.5 text-xs text-stone-700 p-2 rounded-lg bg-stone-50 border border-stone-200">
@@ -470,13 +491,13 @@ export default function ModernDesignDemo() {
 
               {/* Available Rooms List */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 mb-2">Available Suites</h4>
-                <div className="space-y-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 mb-1.5">Available Suites</h4>
+                <div className="space-y-1.5">
                   {selectedHotel.rooms.map((room, i) => (
-                    <div key={i} className="p-3 rounded-xl border border-stone-200 hover:border-stone-900 transition-all flex items-center justify-between">
+                    <div key={i} className="p-2.5 sm:p-3 rounded-xl border border-stone-200 hover:border-stone-900 transition-all flex items-center justify-between">
                       <div>
                         <h5 className="text-xs sm:text-sm font-bold text-stone-950">{room.name}</h5>
-                        <p className="text-[11px] text-stone-500">{room.beds} • Max {room.capacity} Guests</p>
+                        <p className="text-[10px] sm:text-[11px] text-stone-500">{room.beds} • Max {room.capacity} Guests</p>
                       </div>
                       <div className="text-right">
                         <span className="text-sm sm:text-base font-bold text-stone-950 block">SAR {room.price}</span>
@@ -489,10 +510,10 @@ export default function ModernDesignDemo() {
 
             </div>
 
-            <div className="pt-4 border-t border-stone-200 mt-4">
+            <div className="pt-3 border-t border-stone-200 mt-3">
               <button
                 onClick={() => alert(`Booking initiated for ${selectedHotel.name}`)}
-                className="w-full py-3.5 rounded-xl bg-stone-950 hover:bg-stone-900 text-amber-400 font-bold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2"
+                className="w-full py-3 sm:py-3.5 rounded-xl bg-stone-950 hover:bg-stone-900 text-amber-400 font-bold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2"
               >
                 Proceed to Reservation <ArrowRight className="w-4 h-4" />
               </button>
@@ -503,7 +524,7 @@ export default function ModernDesignDemo() {
       )}
 
       {/* Modern Footer */}
-      <footer className="bg-stone-950 text-stone-400 py-8 border-t border-stone-800 text-xs">
+      <footer className="bg-stone-950 text-stone-400 py-6 sm:py-8 border-t border-stone-800 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
           <p>© {new Date().getFullYear()} Haramain Modern Luxury. Concept 1 of 3.</p>
           <div className="flex items-center gap-4">

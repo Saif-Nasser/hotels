@@ -112,33 +112,35 @@ export default function ClassicDesignDemo() {
   });
 
   return (
-    <div className="min-h-screen bg-[#faf5ee] text-stone-900 font-serif selection:bg-amber-700 selection:text-white">
+    <div className="min-h-screen bg-[#faf5ee] text-stone-900 font-serif selection:bg-amber-700 selection:text-white overflow-x-hidden w-full">
       
-      {/* SINGLE UNIFIED TOP NAVIGATION */}
-      <nav className="sticky top-0 z-50 bg-[#f7ede0]/95 backdrop-blur-md border-b-2 border-amber-600/30 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+      {/* 100% RESPONSIVE CLEAN NAVBAR */}
+      <nav className="sticky top-0 z-50 bg-[#f7ede0]/95 backdrop-blur-md border-b-2 border-amber-600/30 shadow-sm w-full">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          
+          {/* Main Top Row */}
+          <div className="flex items-center justify-between h-14 sm:h-20 gap-2">
             
             {/* Logo */}
-            <Link href="/demo/classic" className="flex items-center gap-3">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-amber-700 bg-gradient-to-br from-amber-600 to-amber-900 p-0.5 shadow-md flex items-center justify-center text-amber-100">
-                <Crown className="w-6 h-6" />
+            <Link href="/demo/classic" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl border-2 border-amber-700 bg-gradient-to-br from-amber-600 to-amber-900 p-0.5 shadow-md flex items-center justify-center text-amber-100">
+                <Crown className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <div>
-                <span className="text-lg sm:text-xl font-bold tracking-wider text-amber-950 uppercase flex items-center gap-1.5">
+              <div className="leading-tight">
+                <span className="text-sm sm:text-lg font-bold tracking-wider text-amber-950 uppercase block">
                   Haramain Heritage
                 </span>
-                <p className="text-[10px] sm:text-xs text-amber-900/80 font-sans italic hidden xs:block">
+                <span className="text-[9px] sm:text-[10px] text-amber-900/80 font-sans italic hidden sm:block">
                   سجل الضيافة الملكية العريقة
-                </p>
+                </span>
               </div>
             </Link>
 
-            {/* Center: Sanctuary Tabs */}
-            <div className="hidden md:flex items-center gap-2 bg-[#ecdac3] p-1 rounded-xl border border-amber-300">
+            {/* Desktop Center: Sanctuary Tabs */}
+            <div className="hidden md:flex items-center gap-1.5 bg-[#ecdac3] p-1 rounded-xl border border-amber-300 font-sans">
               <button
                 onClick={() => setSelectedSanctuary('all')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all font-sans ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedSanctuary === 'all'
                     ? 'bg-amber-900 text-amber-100 shadow'
                     : 'text-amber-950 hover:bg-[#faefe2]'
@@ -148,7 +150,7 @@ export default function ClassicDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedSanctuary('makkah')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all font-sans ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedSanctuary === 'makkah'
                     ? 'bg-amber-900 text-amber-100 shadow'
                     : 'text-amber-950 hover:bg-[#faefe2]'
@@ -158,7 +160,7 @@ export default function ClassicDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedSanctuary('madinah')}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all font-sans ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedSanctuary === 'madinah'
                     ? 'bg-amber-900 text-amber-100 shadow'
                     : 'text-amber-950 hover:bg-[#faefe2]'
@@ -168,69 +170,91 @@ export default function ClassicDesignDemo() {
               </button>
             </div>
 
-            {/* Right: Design Concepts Switcher */}
-            <div className="flex items-center gap-1.5 font-sans">
+            {/* Right: Design Concepts Switcher (Compact, Never Overflows) */}
+            <div className="flex items-center bg-[#ecdac3] p-0.5 sm:p-1 rounded-xl border border-amber-300 font-sans">
               <Link
                 href="/demo/modern"
-                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-[#ecdac3] hover:bg-[#e4cfb5] text-amber-950 transition-colors flex items-center gap-1"
+                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-amber-950 hover:bg-[#faefe2] transition-colors flex items-center gap-1"
+                title="Modern Concept"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-700" /> Modern
+                <Sparkles className="w-3 h-3 text-amber-700" />
+                <span>Modern</span>
               </Link>
               
               <Link
                 href="/demo/classic"
-                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-800 text-amber-100 shadow-sm flex items-center gap-1"
+                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold bg-amber-800 text-amber-100 shadow-sm flex items-center gap-1"
+                title="Classic Concept"
               >
-                <Crown className="w-3.5 h-3.5" /> Classic
+                <Crown className="w-3 h-3 text-amber-100" />
+                <span>Classic</span>
               </Link>
 
               <Link
                 href="/demo/futuristic"
-                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-[#ecdac3] hover:bg-[#e4cfb5] text-amber-950 transition-colors flex items-center gap-1"
+                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-amber-950 hover:bg-[#faefe2] transition-colors flex items-center gap-1"
+                title="Futuristic Concept"
               >
-                <Cpu className="w-3.5 h-3.5 text-amber-700" /> Futuristic
+                <Cpu className="w-3 h-3 text-amber-700" />
+                <span className="hidden xs:inline">Futuristic</span>
+                <span className="xs:hidden">Sci-Fi</span>
               </Link>
             </div>
 
           </div>
-        </div>
 
-        {/* Mobile Sanctuary Tab Bar */}
-        <div className="md:hidden flex items-center justify-around border-t border-amber-600/20 px-3 py-2 bg-[#f2e2d0] text-xs font-bold font-sans">
-          <button
-            onClick={() => setSelectedSanctuary('all')}
-            className={`px-3 py-1 rounded-md transition-colors ${selectedSanctuary === 'all' ? 'bg-amber-900 text-amber-100' : 'text-amber-950'}`}
-          >
-            All
-          </button>
-          <button
-            onClick={() => setSelectedSanctuary('makkah')}
-            className={`px-3 py-1 rounded-md transition-colors ${selectedSanctuary === 'makkah' ? 'bg-amber-900 text-amber-100' : 'text-amber-950'}`}
-          >
-            Makkah
-          </button>
-          <button
-            onClick={() => setSelectedSanctuary('madinah')}
-            className={`px-3 py-1 rounded-md transition-colors ${selectedSanctuary === 'madinah' ? 'bg-amber-900 text-amber-100' : 'text-amber-950'}`}
-          >
-            Madinah
-          </button>
+          {/* Mobile Bottom Row: Clean 100% Full-Width Sanctuary Filter Segments */}
+          <div className="md:hidden pb-2.5 pt-0.5 font-sans">
+            <div className="grid grid-cols-3 gap-1 bg-[#ecdac3] p-1 rounded-xl border border-amber-300 w-full text-center">
+              <button
+                onClick={() => setSelectedSanctuary('all')}
+                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                  selectedSanctuary === 'all'
+                    ? 'bg-amber-900 text-amber-100 shadow-sm'
+                    : 'text-amber-950'
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setSelectedSanctuary('makkah')}
+                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                  selectedSanctuary === 'makkah'
+                    ? 'bg-amber-900 text-amber-100 shadow-sm'
+                    : 'text-amber-950'
+                }`}
+              >
+                Makkah
+              </button>
+              <button
+                onClick={() => setSelectedSanctuary('madinah')}
+                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                  selectedSanctuary === 'madinah'
+                    ? 'bg-amber-900 text-amber-100 shadow-sm'
+                    : 'text-amber-950'
+                }`}
+              >
+                Madinah
+              </button>
+            </div>
+          </div>
+
         </div>
       </nav>
 
       {/* Royal Manuscript Hero Banner */}
-      <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8 bg-[#f5ebe0] border-b-2 border-amber-600/20 text-center space-y-4 sm:space-y-6">
-        <div className="max-w-4xl mx-auto space-y-4">
+      <section className="relative py-8 sm:py-16 px-4 sm:px-6 lg:px-8 bg-[#f5ebe0] border-b-2 border-amber-600/20 text-center space-y-4 sm:space-y-6">
+        <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
           
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-700/40 bg-amber-100 text-amber-950 text-xs font-sans font-bold tracking-widest uppercase shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-700/40 bg-amber-100 text-amber-950 text-xs font-sans font-bold tracking-widest uppercase shadow-sm">
             <Crown className="w-3.5 h-3.5 text-amber-800" /> Concept 2: Classic Royal Heritage
           </div>
 
-          <div className="text-amber-900 text-base sm:text-lg tracking-widest font-normal">
+          <div className="text-amber-900 text-sm sm:text-lg tracking-widest font-normal">
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-normal text-stone-950 leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-normal text-stone-950 leading-tight">
             The Noble Manuscript of <br />
             <span className="italic text-amber-900 font-normal">
               Sacred Sanctuary Stays
@@ -242,20 +266,20 @@ export default function ClassicDesignDemo() {
           </p>
 
           {/* Dual Grand Gates: Makkah & Madinah (Responsive Grid) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto pt-4 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto pt-3 text-left">
             
             <div
               onClick={() => setSelectedSanctuary('makkah')}
-              className={`p-5 rounded-2xl border-2 cursor-pointer transition-all bg-[#faf5ee] ${
+              className={`p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all bg-[#faf5ee] ${
                 selectedSanctuary === 'makkah'
                   ? 'border-amber-700 shadow-md shadow-amber-900/10'
                   : 'border-amber-400/50 hover:border-amber-700'
               }`}
             >
-              <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-amber-900 block">
+              <span className="text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-widest text-amber-900 block">
                 Sanctuary 01
               </span>
-              <h3 className="text-xl font-bold text-stone-950 mt-1">Makkah Al-Mukarramah</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-stone-950 mt-0.5">Makkah Al-Mukarramah</h3>
               <p className="text-xs text-stone-600 font-sans mt-0.5">
                 Facing the Holy Kaaba & Masjid al-Haram
               </p>
@@ -263,16 +287,16 @@ export default function ClassicDesignDemo() {
 
             <div
               onClick={() => setSelectedSanctuary('madinah')}
-              className={`p-5 rounded-2xl border-2 cursor-pointer transition-all bg-[#faf5ee] ${
+              className={`p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all bg-[#faf5ee] ${
                 selectedSanctuary === 'madinah'
                   ? 'border-amber-700 shadow-md shadow-amber-900/10'
                   : 'border-amber-400/50 hover:border-amber-700'
               }`}
             >
-              <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-amber-900 block">
+              <span className="text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-widest text-amber-900 block">
                 Sanctuary 02
               </span>
-              <h3 className="text-xl font-bold text-stone-950 mt-1">Madinah Al-Munawwarah</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-stone-950 mt-0.5">Madinah Al-Munawwarah</h3>
               <p className="text-xs text-stone-600 font-sans mt-0.5">
                 Facing the Green Dome & Masjid an-Nabawi
               </p>
@@ -284,31 +308,31 @@ export default function ClassicDesignDemo() {
       </section>
 
       {/* Staggered Horizontal Parchment Manuscript Cards */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-6 sm:space-y-8">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14 space-y-5 sm:space-y-8">
         
         <div className="flex items-center justify-between border-b-2 border-amber-700/30 pb-3">
           <div>
-            <span className="text-xs uppercase tracking-widest text-amber-900 font-sans font-bold">Royal Registry</span>
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-amber-900 font-sans font-bold">Royal Registry</span>
             <h2 className="text-xl sm:text-2xl font-normal text-stone-950 mt-0.5">Verified Palatial Sanctuaries</h2>
           </div>
           <span className="text-xs font-sans text-stone-600 font-bold">
-            {filteredHotels.length} Noble Records
+            {filteredHotels.length} Records
           </span>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           {filteredHotels.map((hotel) => (
             <div
               key={hotel.id}
-              className="bg-white rounded-2xl sm:rounded-3xl border-2 border-amber-600/40 p-5 sm:p-7 shadow-md hover:shadow-xl transition-all grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-center group relative overflow-hidden"
+              className="bg-white rounded-2xl sm:rounded-3xl border-2 border-amber-600/40 p-4 sm:p-7 shadow-md hover:shadow-xl transition-all grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center group relative overflow-hidden"
             >
               {/* Corner Gold Ribbon Seal */}
-              <div className="absolute top-0 right-0 bg-gradient-to-l from-amber-700 to-amber-900 text-amber-100 text-[9px] font-sans font-bold px-4 py-1 rounded-bl-xl shadow uppercase tracking-wider">
+              <div className="absolute top-0 right-0 bg-gradient-to-l from-amber-700 to-amber-900 text-amber-100 text-[8px] sm:text-[9px] font-sans font-bold px-3 sm:px-4 py-0.5 sm:py-1 rounded-bl-xl shadow uppercase tracking-wider">
                 {hotel.seal}
               </div>
 
               {/* Left Column (5 Cols): Photo */}
-              <div className="lg:col-span-5 relative rounded-xl overflow-hidden h-48 sm:h-56 border border-amber-300 shadow bg-stone-100">
+              <div className="lg:col-span-5 relative rounded-xl overflow-hidden h-44 sm:h-56 border border-amber-300 shadow bg-stone-100">
                 <img
                   src={hotel.image}
                   alt={hotel.name}
@@ -318,28 +342,28 @@ export default function ClassicDesignDemo() {
                 
                 <button
                   onClick={(e) => toggleLike(hotel.id, e)}
-                  className="absolute top-3 left-3 p-2 rounded-full bg-white/90 hover:bg-white text-rose-600 border border-amber-300 transition-all shadow"
+                  className="absolute top-2.5 left-2.5 p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white text-rose-600 border border-amber-300 transition-all shadow"
                 >
                   <Heart className="w-3.5 h-3.5 fill-rose-600 text-rose-600" />
                 </button>
 
-                <div className="absolute bottom-2 left-2 right-2 text-white text-[11px] font-sans flex justify-between items-center bg-black/75 backdrop-blur-sm px-2.5 py-1 rounded">
+                <div className="absolute bottom-2 left-2 right-2 text-white text-[10px] sm:text-[11px] font-sans flex justify-between items-center bg-black/75 backdrop-blur-sm px-2.5 py-1 rounded">
                   <span className="text-amber-300 font-semibold truncate">{hotel.distanceText}</span>
                   <div className="flex text-amber-400 flex-shrink-0">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-3 3 fill-amber-400" />
+                      <Star key={i} className="w-3 h-3 fill-amber-400" />
                     ))}
                   </div>
                 </div>
               </div>
 
               {/* Center & Right Column (7 Cols): Details */}
-              <div className="lg:col-span-7 space-y-3 font-sans">
+              <div className="lg:col-span-7 space-y-2.5 sm:space-y-3 font-sans">
                 <div>
-                  <span className="text-[10px] font-bold text-amber-900 uppercase tracking-widest block">
+                  <span className="text-[9px] sm:text-[10px] font-bold text-amber-900 uppercase tracking-widest block">
                     {hotel.sanctuary}
                   </span>
-                  <h3 className="text-lg sm:text-xl font-bold text-stone-950 font-serif leading-snug group-hover:text-amber-900 transition-colors">
+                  <h3 className="text-base sm:text-xl font-bold text-stone-950 font-serif leading-snug group-hover:text-amber-900 transition-colors">
                     {hotel.name}
                   </h3>
                   <p className="text-xs text-amber-900 font-serif italic mt-0.5">
@@ -362,10 +386,10 @@ export default function ClassicDesignDemo() {
                 </div>
 
                 {/* Rate & Action */}
-                <div className="pt-3 border-t border-amber-200 flex items-center justify-between gap-3">
+                <div className="pt-2.5 border-t border-amber-200 flex items-center justify-between gap-3">
                   <div>
                     <span className="text-[9px] uppercase tracking-wider text-amber-900 font-bold block">Rate</span>
-                    <span className="text-xl font-bold text-stone-950 font-serif">
+                    <span className="text-lg sm:text-xl font-bold text-stone-950 font-serif">
                       SAR {hotel.price}
                     </span>
                     <span className="text-[10px] text-stone-600"> /night</span>
@@ -373,7 +397,7 @@ export default function ClassicDesignDemo() {
 
                   <button
                     onClick={() => alert(`Reserving ${hotel.name}`)}
-                    className="px-5 py-2.5 rounded-xl bg-amber-900 hover:bg-amber-950 text-amber-100 font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-1.5"
+                    className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-amber-900 hover:bg-amber-950 text-amber-100 font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-1.5"
                   >
                     <BookOpen className="w-3.5 h-3.5" /> Book Suite
                   </button>
@@ -388,7 +412,7 @@ export default function ClassicDesignDemo() {
       </section>
 
       {/* Classic Manuscript Footer */}
-      <footer className="border-t-2 border-amber-600/30 bg-[#f4ece1] py-8 px-4 text-center font-sans text-xs text-stone-700">
+      <footer className="border-t-2 border-amber-600/30 bg-[#f4ece1] py-6 sm:py-8 px-4 text-center font-sans text-xs text-stone-700">
         <p className="font-bold text-amber-950 font-serif text-sm mb-1">سجل ضيافة الحرمين الشريفين الملكي</p>
         <p>© {new Date().getFullYear()} Haramain Heritage Registry. Concept 2 of 3.</p>
       </footer>
