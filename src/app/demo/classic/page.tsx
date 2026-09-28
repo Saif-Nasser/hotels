@@ -2,11 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import ThemeDemoNav from '@/components/ThemeDemoNav';
 import { 
   Crown, Star, Heart, MapPin, Footprints, 
   Search, Moon, Award, ArrowRight, 
-  BookOpen, Scroll, CheckCircle2
+  BookOpen, Scroll, CheckCircle2, Sparkles, Cpu
 } from 'lucide-react';
 
 const CLASSIC_HERITAGE_HOTELS = [
@@ -114,50 +113,110 @@ export default function ClassicDesignDemo() {
 
   return (
     <div className="min-h-screen bg-[#faf5ee] text-stone-900 font-serif selection:bg-amber-700 selection:text-white">
-      <ThemeDemoNav />
+      
+      {/* SINGLE UNIFIED TOP NAVIGATION */}
+      <nav className="sticky top-0 z-50 bg-[#f7ede0]/95 backdrop-blur-md border-b-2 border-amber-600/30 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            
+            {/* Logo */}
+            <Link href="/demo/classic" className="flex items-center gap-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-amber-700 bg-gradient-to-br from-amber-600 to-amber-900 p-0.5 shadow-md flex items-center justify-center text-amber-100">
+                <Crown className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-lg sm:text-xl font-bold tracking-wider text-amber-950 uppercase flex items-center gap-1.5">
+                  Haramain Heritage
+                </span>
+                <p className="text-[10px] sm:text-xs text-amber-900/80 font-sans italic hidden xs:block">
+                  سجل الضيافة الملكية العريقة
+                </p>
+              </div>
+            </Link>
 
-      {/* Classic Royal Manuscript Header (No Admin Button, Mobile Responsive) */}
-      <header className="border-b-2 border-amber-600/30 bg-[#f7ede0]/95 backdrop-blur-md sticky top-11 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-          
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border-2 border-amber-700 bg-gradient-to-br from-amber-600 to-amber-900 p-0.5 shadow-md flex items-center justify-center text-amber-100">
-              <Crown className="w-6 h-6" />
+            {/* Center: Sanctuary Tabs */}
+            <div className="hidden md:flex items-center gap-2 bg-[#ecdac3] p-1 rounded-xl border border-amber-300">
+              <button
+                onClick={() => setSelectedSanctuary('all')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all font-sans ${
+                  selectedSanctuary === 'all'
+                    ? 'bg-amber-900 text-amber-100 shadow'
+                    : 'text-amber-950 hover:bg-[#faefe2]'
+                }`}
+              >
+                All Sanctuaries
+              </button>
+              <button
+                onClick={() => setSelectedSanctuary('makkah')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all font-sans ${
+                  selectedSanctuary === 'makkah'
+                    ? 'bg-amber-900 text-amber-100 shadow'
+                    : 'text-amber-950 hover:bg-[#faefe2]'
+                }`}
+              >
+                Makkah Al-Mukarramah
+              </button>
+              <button
+                onClick={() => setSelectedSanctuary('madinah')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all font-sans ${
+                  selectedSanctuary === 'madinah'
+                    ? 'bg-amber-900 text-amber-100 shadow'
+                    : 'text-amber-950 hover:bg-[#faefe2]'
+                }`}
+              >
+                Madinah Al-Munawwarah
+              </button>
             </div>
-            <div>
-              <span className="text-lg sm:text-xl font-bold tracking-wider text-amber-950 uppercase flex items-center gap-1.5">
-                Haramain Heritage
-              </span>
-              <p className="text-[10px] sm:text-xs text-amber-900/80 font-sans italic hidden xs:block">
-                سجل الضيافة الملكية العريقة في مكة المكرمة والمدينة المنورة
-              </p>
+
+            {/* Right: Design Concepts Switcher */}
+            <div className="flex items-center gap-1.5 font-sans">
+              <Link
+                href="/demo/modern"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-[#ecdac3] hover:bg-[#e4cfb5] text-amber-950 transition-colors flex items-center gap-1"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-700" /> Modern
+              </Link>
+              
+              <Link
+                href="/demo/classic"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-800 text-amber-100 shadow-sm flex items-center gap-1"
+              >
+                <Crown className="w-3.5 h-3.5" /> Classic
+              </Link>
+
+              <Link
+                href="/demo/futuristic"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-[#ecdac3] hover:bg-[#e4cfb5] text-amber-950 transition-colors flex items-center gap-1"
+              >
+                <Cpu className="w-3.5 h-3.5 text-amber-700" /> Futuristic
+              </Link>
             </div>
-          </div>
 
-          {/* Grand Sanctuary Selector */}
-          <div className="flex items-center gap-2 sm:gap-6 font-sans text-xs font-bold uppercase tracking-widest text-stone-800">
-            <button
-              onClick={() => setSelectedSanctuary('all')}
-              className={`pb-1 border-b-2 transition-all ${selectedSanctuary === 'all' ? 'border-amber-700 text-amber-900 font-black' : 'border-transparent text-stone-600 hover:text-stone-900'}`}
-            >
-              All
-            </button>
-            <button
-              onClick={() => setSelectedSanctuary('makkah')}
-              className={`pb-1 border-b-2 transition-all ${selectedSanctuary === 'makkah' ? 'border-amber-700 text-amber-900 font-black' : 'border-transparent text-stone-600 hover:text-stone-900'}`}
-            >
-              Makkah
-            </button>
-            <button
-              onClick={() => setSelectedSanctuary('madinah')}
-              className={`pb-1 border-b-2 transition-all ${selectedSanctuary === 'madinah' ? 'border-amber-700 text-amber-900 font-black' : 'border-transparent text-stone-600 hover:text-stone-900'}`}
-            >
-              Madinah
-            </button>
           </div>
-
         </div>
-      </header>
+
+        {/* Mobile Sanctuary Tab Bar */}
+        <div className="md:hidden flex items-center justify-around border-t border-amber-600/20 px-3 py-2 bg-[#f2e2d0] text-xs font-bold font-sans">
+          <button
+            onClick={() => setSelectedSanctuary('all')}
+            className={`px-3 py-1 rounded-md transition-colors ${selectedSanctuary === 'all' ? 'bg-amber-900 text-amber-100' : 'text-amber-950'}`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setSelectedSanctuary('makkah')}
+            className={`px-3 py-1 rounded-md transition-colors ${selectedSanctuary === 'makkah' ? 'bg-amber-900 text-amber-100' : 'text-amber-950'}`}
+          >
+            Makkah
+          </button>
+          <button
+            onClick={() => setSelectedSanctuary('madinah')}
+            className={`px-3 py-1 rounded-md transition-colors ${selectedSanctuary === 'madinah' ? 'bg-amber-900 text-amber-100' : 'text-amber-950'}`}
+          >
+            Madinah
+          </button>
+        </div>
+      </nav>
 
       {/* Royal Manuscript Hero Banner */}
       <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8 bg-[#f5ebe0] border-b-2 border-amber-600/20 text-center space-y-4 sm:space-y-6">
@@ -268,7 +327,7 @@ export default function ClassicDesignDemo() {
                   <span className="text-amber-300 font-semibold truncate">{hotel.distanceText}</span>
                   <div className="flex text-amber-400 flex-shrink-0">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-amber-400" />
+                      <Star key={i} className="w-3 3 fill-amber-400" />
                     ))}
                   </div>
                 </div>

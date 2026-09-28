@@ -2,12 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import ThemeDemoNav from '@/components/ThemeDemoNav';
 import { 
   Cpu, Navigation, Zap, Radio, Activity, Terminal, 
   Sparkles, Crosshair, ArrowUpRight, Heart, Eye, 
-  ShieldCheck, Disc, Wifi, Database, Sliders, 
-  Layers, Lock, CheckCircle2, ChevronRight
+  ShieldCheck, Disc, Wifi, Database, Sliders, Crown
 } from 'lucide-react';
 
 const FUTURISTIC_TELEMETRY_NODES = [
@@ -92,51 +90,92 @@ export default function FuturisticDesignDemo() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-amber-300 font-mono selection:bg-amber-400 selection:text-black">
-      <ThemeDemoNav />
+      
+      {/* SINGLE UNIFIED TOP HUD BAR */}
+      <nav className="border-b border-amber-500/30 bg-black/95 backdrop-blur-xl sticky top-0 z-50 shadow-[0_0_20px_rgba(251,191,36,0.15)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            
+            {/* Logo */}
+            <Link href="/demo/futuristic" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded bg-black border-2 border-amber-400 flex items-center justify-center text-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
+                <Crosshair className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base font-black tracking-widest text-white">
+                    NOOR<span className="text-amber-400">.QUANTUM</span>
+                  </span>
+                  <span className="text-[8px] bg-amber-400/20 text-amber-300 border border-amber-400/60 px-1.5 py-0.2 rounded font-black">
+                    HUD v5.0
+                  </span>
+                </div>
+                <p className="text-[9px] text-stone-400 hidden xs:block">AI GEOSPATIAL TELEMETRY</p>
+              </div>
+            </Link>
 
-      {/* Cyber Space-Command Top HUD Bar (No Admin Button, Responsive) */}
-      <header className="border-b border-amber-500/30 bg-black/95 sticky top-11 z-40 px-4 sm:px-8 py-3 flex items-center justify-between gap-3 shadow-[0_0_20px_rgba(251,191,36,0.15)]">
-        
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded bg-black border-2 border-amber-400 flex items-center justify-center text-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
-            <Crosshair className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-base font-black tracking-widest text-white">
-                NOOR<span className="text-amber-400">.QUANTUM</span>
-              </span>
-              <span className="text-[8px] bg-amber-400/20 text-amber-300 border border-amber-400/60 px-1.5 py-0.2 rounded font-black">
-                HUD v5.0
-              </span>
+            {/* Center: Sector Toggles */}
+            <div className="hidden md:flex items-center gap-1.5 bg-stone-950 p-1 rounded-lg border border-stone-800">
+              {(['ALL', 'MAKKAH', 'MADINAH'] as const).map((sector) => (
+                <button
+                  key={sector}
+                  onClick={() => setSelectedSector(sector)}
+                  className={`px-3 py-1 rounded text-xs transition-all ${
+                    selectedSector === sector
+                      ? 'border border-amber-400 bg-amber-400/20 text-white font-bold shadow-[0_0_10px_rgba(251,191,36,0.3)]'
+                      : 'text-stone-400 hover:text-stone-200'
+                  }`}
+                >
+                  {sector}_SECTOR
+                </button>
+              ))}
             </div>
-            <p className="text-[9px] text-stone-400 hidden xs:block">AI GEOSPATIAL TELEMETRY</p>
+
+            {/* Right: Design Concepts Switcher */}
+            <div className="flex items-center gap-1.5 font-sans">
+              <Link
+                href="/demo/modern"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-800 transition-colors flex items-center gap-1"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Modern
+              </Link>
+              
+              <Link
+                href="/demo/classic"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-800 transition-colors flex items-center gap-1"
+              >
+                <Crown className="w-3.5 h-3.5 text-amber-400" /> Classic
+              </Link>
+
+              <Link
+                href="/demo/futuristic"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-black font-black shadow-[0_0_10px_rgba(251,191,36,0.5)] flex items-center gap-1"
+              >
+                <Cpu className="w-3.5 h-3.5" /> Futuristic
+              </Link>
+            </div>
+
           </div>
         </div>
 
-        {/* Sector Toggles */}
-        <div className="flex items-center gap-1.5 text-xs">
+        {/* Mobile Sector Bar */}
+        <div className="md:hidden flex items-center justify-around border-t border-stone-900 px-3 py-2 bg-stone-950 text-xs font-bold">
           {(['ALL', 'MAKKAH', 'MADINAH'] as const).map((sector) => (
             <button
               key={sector}
               onClick={() => setSelectedSector(sector)}
-              className={`px-2.5 py-1 rounded text-[11px] border transition-all ${
-                selectedSector === sector
-                  ? 'border-amber-400 bg-amber-400/20 text-white font-bold shadow-[0_0_10px_rgba(251,191,36,0.3)]'
-                  : 'border-stone-800 text-stone-500 hover:text-stone-300'
-              }`}
+              className={`px-3 py-1 rounded transition-colors ${selectedSector === sector ? 'bg-amber-400 text-black' : 'text-stone-400'}`}
             >
               {sector}
             </button>
           ))}
         </div>
-
-      </header>
+      </nav>
 
       {/* Main Mission Control Console */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
         
-        {/* Top Status HUD Telemetry Ticker (Responsive 2x2 Grid) */}
+        {/* Top Status HUD Telemetry Ticker */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-xs">
           
           <div className="p-3 rounded-xl bg-stone-950 border border-amber-500/30">
@@ -173,7 +212,7 @@ export default function FuturisticDesignDemo() {
 
         </div>
 
-        {/* Split Screen Mission Console (Responsive Stacking on Mobile) */}
+        {/* Split Screen Mission Console */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
           
           {/* LEFT PANEL (7 Cols): Live Radar Target View */}

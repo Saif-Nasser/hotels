@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import ThemeDemoNav from '@/components/ThemeDemoNav';
 import { 
   Sparkles, Search, MapPin, Star, Heart, Eye, Footprints, 
-  ArrowRight, ShieldCheck, Moon, X, Check, Calendar, Users, ChevronRight
+  ArrowRight, ShieldCheck, Moon, X, Check, Calendar, Users, 
+  ChevronRight, Crown, Cpu, Menu
 } from 'lucide-react';
 
 const MODERN_HOTELS = [
@@ -100,6 +100,7 @@ export default function ModernDesignDemo() {
   const [selectedCity, setSelectedCity] = useState('all');
   const [activeTab, setActiveTab] = useState('all');
   const [selectedHotel, setSelectedHotel] = useState<typeof MODERN_HOTELS[0] | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [likesCount, setLikesCount] = useState<{ [key: string]: number }>({
     '1': 148,
     '2': 92,
@@ -124,31 +125,111 @@ export default function ModernDesignDemo() {
   });
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 font-sans selection:bg-amber-400 selection:text-stone-950">
-      <ThemeDemoNav />
+    <div className="min-h-screen bg-[#fafaf9] text-stone-900 font-sans selection:bg-amber-400 selection:text-stone-950">
+      
+      {/* SINGLE UNIFIED TOP NAVIGATION (Clean, High-Contrast, 100% Functional) */}
+      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            
+            {/* Logo */}
+            <Link href="/demo/modern" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl bg-stone-950 flex items-center justify-center text-amber-400 font-bold border border-amber-400/40 shadow-sm group-hover:scale-105 transition-transform">
+                H
+              </div>
+              <div>
+                <span className="text-lg sm:text-xl font-bold tracking-tight text-stone-950 font-serif block">
+                  HARAMAIN <span className="text-amber-600 font-sans text-xs font-semibold uppercase tracking-wider">MODERN</span>
+                </span>
+                <span className="text-[10px] text-stone-500 block -mt-0.5">5-Star Sanctuary Stays</span>
+              </div>
+            </Link>
 
-      {/* Modern Minimalist Navigation Header (Clean, No Admin Button) */}
-      <header className="bg-white/95 backdrop-blur-md border-b border-stone-200 sticky top-11 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-stone-950 flex items-center justify-center text-amber-400 font-bold border border-amber-400/40 shadow">
-              H
+            {/* Center: City Filter Tabs */}
+            <div className="hidden md:flex items-center gap-2 bg-stone-100 p-1 rounded-xl border border-stone-200">
+              <button
+                onClick={() => setSelectedCity('all')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  selectedCity === 'all'
+                    ? 'bg-stone-950 text-white shadow'
+                    : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
+                }`}
+              >
+                All Sanctuaries
+              </button>
+              <button
+                onClick={() => setSelectedCity('Makkah')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  selectedCity === 'Makkah'
+                    ? 'bg-stone-950 text-white shadow'
+                    : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
+                }`}
+              >
+                <MapPin className="w-3 h-3 text-amber-600" /> Makkah
+              </button>
+              <button
+                onClick={() => setSelectedCity('Madinah')}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  selectedCity === 'Madinah'
+                    ? 'bg-stone-950 text-white shadow'
+                    : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
+                }`}
+              >
+                <MapPin className="w-3 h-3 text-amber-600" /> Madinah
+              </button>
             </div>
-            <div>
-              <span className="text-lg sm:text-xl font-bold tracking-tight text-stone-950 font-serif">
-                HARAMAIN <span className="text-amber-600 font-sans text-xs font-semibold uppercase tracking-wider">MODERN</span>
-              </span>
-              <p className="text-[10px] sm:text-[11px] text-stone-500">Curated 5-Star Pilgrimage Stays</p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-2 sm:gap-6 text-xs font-semibold uppercase tracking-wider text-stone-600">
-            <button onClick={() => setSelectedCity('all')} className={`px-2 py-1 transition-colors ${selectedCity === 'all' ? 'text-stone-950 font-bold border-b-2 border-stone-950' : 'hover:text-stone-950'}`}>All</button>
-            <button onClick={() => setSelectedCity('Makkah')} className={`px-2 py-1 transition-colors ${selectedCity === 'Makkah' ? 'text-stone-950 font-bold border-b-2 border-stone-950' : 'hover:text-stone-950'}`}>Makkah</button>
-            <button onClick={() => setSelectedCity('Madinah')} className={`px-2 py-1 transition-colors ${selectedCity === 'Madinah' ? 'text-stone-950 font-bold border-b-2 border-stone-950' : 'hover:text-stone-950'}`}>Madinah</button>
+            {/* Right: Design Concepts Switcher */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] text-stone-400 font-bold uppercase tracking-wider mr-1 hidden lg:block">Concepts:</span>
+              
+              <Link
+                href="/demo/modern"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-stone-950 shadow-sm flex items-center gap-1"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> Modern
+              </Link>
+              
+              <Link
+                href="/demo/classic"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors flex items-center gap-1"
+              >
+                <Crown className="w-3.5 h-3.5 text-amber-600" /> Classic
+              </Link>
+
+              <Link
+                href="/demo/futuristic"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors flex items-center gap-1"
+              >
+                <Cpu className="w-3.5 h-3.5 text-amber-600" /> Futuristic
+              </Link>
+            </div>
+
           </div>
         </div>
-      </header>
+
+        {/* Mobile City Tab Bar */}
+        <div className="md:hidden flex items-center justify-around border-t border-stone-200 px-3 py-2 bg-stone-50 text-xs font-bold">
+          <button
+            onClick={() => setSelectedCity('all')}
+            className={`px-3 py-1 rounded-md transition-colors ${selectedCity === 'all' ? 'bg-stone-950 text-white' : 'text-stone-600'}`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setSelectedCity('Makkah')}
+            className={`px-3 py-1 rounded-md transition-colors ${selectedCity === 'Makkah' ? 'bg-stone-950 text-white' : 'text-stone-600'}`}
+          >
+            Makkah
+          </button>
+          <button
+            onClick={() => setSelectedCity('Madinah')}
+            className={`px-3 py-1 rounded-md transition-colors ${selectedCity === 'Madinah' ? 'bg-stone-950 text-white' : 'text-stone-600'}`}
+          >
+            Madinah
+          </button>
+        </div>
+      </nav>
 
       {/* Split Editorial Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-12 sm:pb-16">
@@ -157,7 +238,7 @@ export default function ModernDesignDemo() {
           <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-stone-800 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Modern Minimalist Luxury • Concept 1</span>
+              <span>Modern Minimalist Luxury</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-normal text-stone-950 tracking-tight leading-tight font-serif">
@@ -250,50 +331,8 @@ export default function ModernDesignDemo() {
         </div>
       </section>
 
-      {/* Floating Minimalist Search Pill */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 relative z-20">
-        <div className="bg-white rounded-2xl shadow-xl border border-stone-200 p-3 grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
-          
-          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-stone-100">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-amber-600" /> City
-            </label>
-            <select
-              value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-full text-xs sm:text-sm font-semibold text-stone-900 bg-transparent focus:outline-none cursor-pointer mt-0.5"
-            >
-              <option value="all">All Sanctuaries</option>
-              <option value="Makkah">Makkah Al-Mukarramah</option>
-              <option value="Madinah">Madinah Al-Munawwarah</option>
-            </select>
-          </div>
-
-          <div className="px-3 py-2 border-b sm:border-b-0 sm:border-r border-stone-100">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block flex items-center gap-1">
-              <Calendar className="w-3 h-3 text-amber-600" /> Season
-            </label>
-            <span className="text-xs sm:text-sm font-semibold text-stone-900 block mt-0.5">Umrah & Ramadan</span>
-          </div>
-
-          <div className="px-3 py-2 border-b sm:border-b-0 border-stone-100">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block flex items-center gap-1">
-              <Users className="w-3 h-3 text-amber-600" /> Guests
-            </label>
-            <span className="text-xs sm:text-sm font-semibold text-stone-900 block mt-0.5">2 Adults • 1 Suite</span>
-          </div>
-
-          <div>
-            <button className="w-full py-3 px-4 rounded-xl bg-stone-950 hover:bg-stone-900 text-amber-400 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md">
-              <Search className="w-4 h-4" /> Search Stays
-            </button>
-          </div>
-
-        </div>
-      </section>
-
       {/* Modern Hotel Cards Collection */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <div>
             <span className="text-xs uppercase tracking-widest text-amber-600 font-bold">Curated Sanctuary Stays</span>
@@ -381,7 +420,7 @@ export default function ModernDesignDemo() {
         </div>
       </section>
 
-      {/* Interactive Quick-View Slide Drawer Modal (Fully Responsive on Mobile) */}
+      {/* Interactive Quick-View Slide Drawer Modal */}
       {selectedHotel && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fade-in p-0 sm:p-4">
           <div className="w-full max-w-lg bg-white h-full sm:rounded-2xl shadow-2xl overflow-y-auto p-5 sm:p-6 flex flex-col justify-between">
