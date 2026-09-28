@@ -91,21 +91,21 @@ export default function FuturisticDesignDemo() {
   return (
     <div className="min-h-screen bg-[#050505] text-amber-300 font-mono selection:bg-amber-400 selection:text-black overflow-x-hidden w-full">
       
-      {/* 100% RESPONSIVE CLEAN NAVBAR */}
+      {/* 100% RESPONSIVE ADAPTIVE NAVBAR */}
       <nav className="border-b border-amber-500/30 bg-black/95 backdrop-blur-xl sticky top-0 z-50 shadow-[0_0_20px_rgba(251,191,36,0.15)] w-full">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Main Top Row */}
-          <div className="flex items-center justify-between h-14 sm:h-20 gap-2">
+          {/* Top Row: Logo & Desktop Controls */}
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
             
             {/* Logo */}
-            <Link href="/demo/futuristic" className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
+            <Link href="/demo/futuristic" className="flex items-center gap-2.5 flex-shrink-0">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded bg-black border-2 border-amber-400 flex items-center justify-center text-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
                 <Crosshair className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
               </div>
               <div className="leading-tight">
-                <div className="flex items-center gap-1">
-                  <span className="text-sm sm:text-base font-black tracking-widest text-white">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base sm:text-lg font-black tracking-widest text-white">
                     NOOR<span className="text-amber-400">.QUANTUM</span>
                   </span>
                   <span className="text-[7px] sm:text-[8px] bg-amber-400/20 text-amber-300 border border-amber-400/60 px-1 py-0.2 rounded font-black">
@@ -133,47 +133,70 @@ export default function FuturisticDesignDemo() {
               ))}
             </div>
 
-            {/* Right: Design Concepts Switcher (Compact, Never Overflows) */}
-            <div className="flex items-center bg-stone-900 p-0.5 sm:p-1 rounded-xl border border-stone-800 font-sans">
+            {/* Desktop Right: Design Switcher */}
+            <div className="hidden md:flex items-center bg-stone-900 p-1 rounded-xl border border-stone-800 font-sans">
               <Link
                 href="/demo/modern"
-                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-stone-300 hover:text-white transition-colors flex items-center gap-1"
-                title="Modern Concept"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold text-stone-300 hover:text-white transition-colors flex items-center gap-1.5"
               >
-                <Sparkles className="w-3 h-3 text-amber-400" />
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                 <span>Modern</span>
               </Link>
               
               <Link
                 href="/demo/classic"
-                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-stone-300 hover:text-white transition-colors flex items-center gap-1"
-                title="Classic Concept"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold text-stone-300 hover:text-white transition-colors flex items-center gap-1.5"
               >
-                <Crown className="w-3 h-3 text-amber-400" />
+                <Crown className="w-3.5 h-3.5 text-amber-400" />
                 <span>Classic</span>
               </Link>
 
               <Link
                 href="/demo/futuristic"
-                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold bg-amber-400 text-black font-black shadow-[0_0_10px_rgba(251,191,36,0.5)] flex items-center gap-1"
-                title="Futuristic Concept"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-black font-black shadow-[0_0_10px_rgba(251,191,36,0.5)] flex items-center gap-1.5"
               >
-                <Cpu className="w-3 h-3" />
-                <span className="hidden xs:inline">Futuristic</span>
-                <span className="xs:hidden">Sci-Fi</span>
+                <Cpu className="w-3.5 h-3.5" />
+                <span>Futuristic</span>
               </Link>
             </div>
 
           </div>
 
-          {/* Mobile Bottom Row: Clean 100% Full-Width Sector Segments */}
-          <div className="md:hidden pb-2.5 pt-0.5">
+          {/* Mobile Tier 1: Design Concepts Full-Width Bar (Between Logo & Location) */}
+          <div className="md:hidden pb-2 pt-1 border-t border-stone-900 font-sans">
+            <div className="text-[10px] uppercase font-bold text-stone-500 tracking-wider mb-1.5 flex items-center gap-1">
+              <Cpu className="w-3 h-3 text-amber-400" /> Select Design Concept:
+            </div>
+            <div className="grid grid-cols-3 gap-1.5 bg-stone-900 p-1 rounded-xl border border-stone-800 w-full text-center">
+              <Link
+                href="/demo/modern"
+                className="py-1.5 rounded-lg text-xs font-bold text-stone-300 hover:text-white flex items-center justify-center gap-1"
+              >
+                <Sparkles className="w-3 h-3 text-amber-400" /> Modern
+              </Link>
+              <Link
+                href="/demo/classic"
+                className="py-1.5 rounded-lg text-xs font-bold text-stone-300 hover:text-white flex items-center justify-center gap-1"
+              >
+                <Crown className="w-3 h-3 text-amber-400" /> Classic
+              </Link>
+              <Link
+                href="/demo/futuristic"
+                className="py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-black font-black shadow-sm flex items-center justify-center gap-1"
+              >
+                <Cpu className="w-3 h-3" /> Futuristic
+              </Link>
+            </div>
+          </div>
+
+          {/* Mobile Tier 2: Sector Segment Tabs (Full-Width) */}
+          <div className="md:hidden pb-3">
             <div className="grid grid-cols-3 gap-1 bg-stone-950 p-1 rounded-xl border border-stone-800 w-full text-center">
               {(['ALL', 'MAKKAH', 'MADINAH'] as const).map((sector) => (
                 <button
                   key={sector}
                   onClick={() => setSelectedSector(sector)}
-                  className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                     selectedSector === sector
                       ? 'bg-amber-400 text-black shadow-sm'
                       : 'text-stone-400'

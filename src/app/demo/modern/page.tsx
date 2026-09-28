@@ -126,23 +126,23 @@ export default function ModernDesignDemo() {
   return (
     <div className="min-h-screen bg-[#fafaf9] text-stone-900 font-sans selection:bg-amber-400 selection:text-stone-950 overflow-x-hidden w-full">
       
-      {/* 100% RESPONSIVE CLEAN NAVBAR */}
+      {/* 100% RESPONSIVE ADAPTIVE NAVBAR */}
       <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm w-full">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Main Top Row */}
-          <div className="flex items-center justify-between h-14 sm:h-20 gap-2">
+          {/* Top Row: Logo & Desktop Controls */}
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
             
             {/* Logo */}
-            <Link href="/demo/modern" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-stone-950 flex items-center justify-center text-amber-400 font-bold text-sm sm:text-base border border-amber-400/40 shadow-sm">
+            <Link href="/demo/modern" className="flex items-center gap-3 flex-shrink-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-stone-950 flex items-center justify-center text-amber-400 font-bold text-base border border-amber-400/40 shadow-sm">
                 H
               </div>
               <div className="leading-tight">
-                <span className="text-sm sm:text-lg font-bold tracking-tight text-stone-950 font-serif block">
-                  HARAMAIN <span className="text-amber-600 font-sans text-[10px] sm:text-xs font-semibold uppercase">MODERN</span>
+                <span className="text-base sm:text-xl font-bold tracking-tight text-stone-950 font-serif block">
+                  HARAMAIN <span className="text-amber-600 font-sans text-xs font-semibold uppercase">MODERN</span>
                 </span>
-                <span className="text-[9px] sm:text-[10px] text-stone-500 hidden sm:block">5-Star Stays</span>
+                <span className="text-[10px] text-stone-500 block">5-Star Sanctuary Stays</span>
               </div>
             </Link>
 
@@ -150,7 +150,7 @@ export default function ModernDesignDemo() {
             <div className="hidden md:flex items-center gap-1.5 bg-stone-100 p-1 rounded-xl border border-stone-200">
               <button
                 onClick={() => setSelectedCity('all')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedCity === 'all'
                     ? 'bg-stone-950 text-white shadow'
                     : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
@@ -160,7 +160,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedCity('Makkah')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
                   selectedCity === 'Makkah'
                     ? 'bg-stone-950 text-white shadow'
                     : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
@@ -170,7 +170,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedCity('Madinah')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
                   selectedCity === 'Madinah'
                     ? 'bg-stone-950 text-white shadow'
                     : 'text-stone-600 hover:text-stone-950 hover:bg-white/80'
@@ -180,45 +180,68 @@ export default function ModernDesignDemo() {
               </button>
             </div>
 
-            {/* Right: Design Concepts Switcher (Compact, Never Overflows) */}
-            <div className="flex items-center bg-stone-100 p-0.5 sm:p-1 rounded-xl border border-stone-200">
+            {/* Desktop Right: Design Switcher */}
+            <div className="hidden md:flex items-center bg-stone-100 p-1 rounded-xl border border-stone-200">
               <Link
                 href="/demo/modern"
-                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold bg-amber-400 text-stone-950 shadow-sm flex items-center gap-1"
-                title="Modern Concept"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-stone-950 shadow-sm flex items-center gap-1.5"
               >
-                <Sparkles className="w-3 h-3 text-stone-950" />
+                <Sparkles className="w-3.5 h-3.5 text-stone-950" />
                 <span>Modern</span>
               </Link>
               
               <Link
                 href="/demo/classic"
-                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-stone-600 hover:text-stone-950 transition-colors flex items-center gap-1"
-                title="Classic Concept"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold text-stone-600 hover:text-stone-950 transition-colors flex items-center gap-1.5"
               >
-                <Crown className="w-3 h-3 text-amber-600" />
+                <Crown className="w-3.5 h-3.5 text-amber-600" />
                 <span>Classic</span>
               </Link>
 
               <Link
                 href="/demo/futuristic"
-                className="px-2 sm:px-3 py-1 rounded-lg text-[11px] sm:text-xs font-bold text-stone-600 hover:text-stone-950 transition-colors flex items-center gap-1"
-                title="Futuristic Concept"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold text-stone-600 hover:text-stone-950 transition-colors flex items-center gap-1.5"
               >
-                <Cpu className="w-3 h-3 text-amber-600" />
-                <span className="hidden xs:inline">Futuristic</span>
-                <span className="xs:hidden">Sci-Fi</span>
+                <Cpu className="w-3.5 h-3.5 text-amber-600" />
+                <span>Futuristic</span>
               </Link>
             </div>
 
           </div>
 
-          {/* Mobile Bottom Row: Clean 100% Full-Width City Filter Segments */}
-          <div className="md:hidden pb-2.5 pt-0.5">
-            <div className="grid grid-cols-3 gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200 w-full text-center">
+          {/* Mobile Tier 1: Design Concepts Full-Width Bar (Between Logo & Location) */}
+          <div className="md:hidden pb-2 pt-1 border-t border-stone-100">
+            <div className="text-[10px] uppercase font-bold text-stone-400 tracking-wider mb-1.5 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-amber-600" /> Select Design Concept:
+            </div>
+            <div className="grid grid-cols-3 gap-1.5 bg-stone-100 p-1 rounded-xl border border-stone-200 w-full text-center">
+              <Link
+                href="/demo/modern"
+                className="py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-stone-950 shadow-sm flex items-center justify-center gap-1"
+              >
+                <Sparkles className="w-3 h-3" /> Modern
+              </Link>
+              <Link
+                href="/demo/classic"
+                className="py-1.5 rounded-lg text-xs font-bold text-stone-600 hover:text-stone-950 flex items-center justify-center gap-1"
+              >
+                <Crown className="w-3 h-3 text-amber-600" /> Classic
+              </Link>
+              <Link
+                href="/demo/futuristic"
+                className="py-1.5 rounded-lg text-xs font-bold text-stone-600 hover:text-stone-950 flex items-center justify-center gap-1"
+              >
+                <Cpu className="w-3 h-3 text-amber-600" /> Futuristic
+              </Link>
+            </div>
+          </div>
+
+          {/* Mobile Tier 2: Location Sanctuary Tabs (Full-Width) */}
+          <div className="md:hidden pb-3">
+            <div className="grid grid-cols-3 gap-1 bg-stone-200/70 p-1 rounded-xl w-full text-center">
               <button
                 onClick={() => setSelectedCity('all')}
-                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedCity === 'all'
                     ? 'bg-stone-950 text-white shadow-sm'
                     : 'text-stone-600 hover:text-stone-950'
@@ -228,7 +251,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedCity('Makkah')}
-                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedCity === 'Makkah'
                     ? 'bg-stone-950 text-white shadow-sm'
                     : 'text-stone-600 hover:text-stone-950'
@@ -238,7 +261,7 @@ export default function ModernDesignDemo() {
               </button>
               <button
                 onClick={() => setSelectedCity('Madinah')}
-                className={`py-1 rounded-lg text-xs font-bold transition-all ${
+                className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                   selectedCity === 'Madinah'
                     ? 'bg-stone-950 text-white shadow-sm'
                     : 'text-stone-600 hover:text-stone-950'
