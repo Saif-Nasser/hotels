@@ -2,43 +2,55 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Crown, Cpu } from 'lucide-react';
+import { Sparkles, Crown, Cpu, Home } from 'lucide-react';
 
 export default function ThemeDemoNav() {
   const pathname = usePathname();
 
   const themes = [
     {
-      name: '1. Modern Luxury',
+      name: 'Modern Luxury',
       href: '/demo/modern',
       icon: Sparkles,
-      desc: 'Minimalist, sleek, high-contrast gold & black cards',
+      color: 'from-amber-400 to-amber-600',
     },
     {
-      name: '2. Classic Royal',
+      name: 'Classic Royal',
       href: '/demo/classic',
       icon: Crown,
-      desc: 'Ornate Islamic arches, gold foil trims, royal heritage',
+      color: 'from-amber-300 to-amber-500',
     },
     {
-      name: '3. Futuristic HUD',
+      name: 'Futuristic HUD',
       href: '/demo/futuristic',
       icon: Cpu,
-      desc: 'Obsidian dark mode, glowing gold glassmorphism & radar',
+      color: 'from-amber-400 to-amber-500',
     },
   ];
 
   return (
-    <div className="bg-stone-950 border-b border-amber-500/30 text-white py-3 px-4 sticky top-0 z-50 shadow-2xl backdrop-blur-md">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
-          <span className="text-xs uppercase tracking-widest text-amber-400 font-bold">
-            Live Design Concepts (Gold • Black • Grey • White)
-          </span>
+    <div className="sticky top-0 z-50 bg-stone-950/95 backdrop-blur-md border-b border-amber-500/20 py-2.5 px-4 shadow-xl">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+        
+        {/* Left: Design Switcher Title & Home */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/demo"
+            className="text-stone-400 hover:text-white p-1 rounded-md hover:bg-stone-900 transition-colors"
+            title="All Concepts Hub"
+          >
+            <Home className="w-4 h-4" />
+          </Link>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
+              Gold • Black • Grey • White Concepts
+            </span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 bg-stone-900/90 p-1 rounded-xl border border-stone-800">
+        {/* Right: 3 Concept Tabs */}
+        <div className="flex items-center gap-1.5 bg-stone-900 p-1 rounded-xl border border-stone-800">
           {themes.map((theme) => {
             const Icon = theme.icon;
             const isActive = pathname === theme.href;
@@ -46,18 +58,19 @@ export default function ThemeDemoNav() {
               <Link
                 key={theme.href}
                 href={theme.href}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 shadow-lg shadow-amber-500/20 scale-105'
-                    : 'text-stone-300 hover:text-white hover:bg-stone-800'
+                    ? 'bg-gradient-to-r from-amber-400 to-amber-600 text-stone-950 shadow-md scale-105'
+                    : 'text-stone-400 hover:text-white hover:bg-stone-800'
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-stone-950' : 'text-amber-400'}`} />
-                {theme.name}
+                <span>{theme.name}</span>
               </Link>
             );
           })}
         </div>
+
       </div>
     </div>
   );

@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Haramain Hotels | Islamic Hotel Booking in Makkah & Madinah',
-  description: 'Book luxury and family hotels near Masjid al-Haram and Masjid an-Nabawi for Umrah and Hajj.',
+  title: 'Haramain Hotels | Islamic Hotel Booking & Sanctuary Stays',
+  description: 'Luxury hotel booking platform for Umrah and Hajj in Makkah and Madinah.',
 };
 
 export default function RootLayout({
@@ -15,10 +13,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col bg-[#fbfbf9] text-stone-900 antialiased selection:bg-emerald-900 selection:text-white">
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+      <body className="min-h-screen bg-stone-950 text-stone-100 antialiased selection:bg-amber-400 selection:text-stone-950 font-sans">
+        {children}
       </body>
     </html>
   );

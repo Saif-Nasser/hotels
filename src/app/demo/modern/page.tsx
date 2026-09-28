@@ -4,17 +4,18 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeDemoNav from '@/components/ThemeDemoNav';
 import { 
-  Search, MapPin, Star, Heart, Eye, Footprints, Sparkles, 
-  ArrowRight, ShieldCheck, Moon, Compass, Building, Calendar, Users
+  Sparkles, Search, MapPin, Star, Heart, Eye, Footprints, 
+  ArrowRight, ShieldCheck, Moon, X, Check, SlidersHorizontal, 
+  ChevronRight, Calendar, Users, Building2
 } from 'lucide-react';
 
-const SAMPLE_REAL_HOTELS = [
+const MODERN_HOTELS = [
   {
     id: '1',
-    name: 'Makkah Clock Royal Tower, A Fairmont Hotel',
+    name: 'Makkah Clock Royal Tower, Fairmont',
+    tagline: 'The Iconic Sanctuary at the Center of the World',
     city: 'Makkah Al-Mukarramah',
-    area: 'Abraj Al Bait Complex',
-    rating: 5,
+    location: 'Abraj Al Bait Complex',
     distanceMeters: 0,
     walkingMin: 1,
     hasKaabaView: true,
@@ -23,14 +24,20 @@ const SAMPLE_REAL_HOTELS = [
     views: 1250,
     likes: 148,
     image: 'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=1200&q=80',
-    amenities: ['Direct Kaaba View', 'Haram Audio', 'On-site Musalla', 'Halal Buffet'],
+    description: 'Directly overlooking the Holy Kaaba with 9 private dining venues, in-room Haram audio stream, and direct private elevators to the Haram prayer halls.',
+    rooms: [
+      { name: 'Royal Kaaba Panorama Suite', price: 2400, capacity: 4, beds: '1 King + 2 Singles' },
+      { name: 'Deluxe Haram View King', price: 1850, capacity: 2, beds: '1 King Bed' },
+      { name: 'Pilgrim Family Quad Suite', price: 2100, capacity: 4, beds: '4 Single Beds' },
+    ],
+    features: ['Direct Kaaba View', 'Live Haram Audio', 'On-site Musalla', 'Halal Buffet', '24/7 Butler'],
   },
   {
     id: '2',
     name: 'Swissôtel Al Maqam Makkah',
+    tagline: 'Floor-to-Ceiling Haram Vistas & Alpine Hospitality',
     city: 'Makkah Al-Mukarramah',
-    area: 'Ajyad Street',
-    rating: 5,
+    location: 'King Abdulaziz Gate Courtyard',
     distanceMeters: 50,
     walkingMin: 2,
     hasKaabaView: true,
@@ -39,14 +46,19 @@ const SAMPLE_REAL_HOTELS = [
     views: 840,
     likes: 92,
     image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80',
-    amenities: ['King Abdulaziz Gate Access', 'Panoramic Views', '24/7 Room Service'],
+    description: 'Modern luxury hotel directly connected to the King Abdulaziz Gate with rapid access for all five daily prayers.',
+    rooms: [
+      { name: 'Premier Kaaba View Room', price: 1550, capacity: 2, beds: '1 King Bed' },
+      { name: 'Classic Twin Pilgrim Room', price: 1250, capacity: 2, beds: '2 Twin Beds' },
+    ],
+    features: ['King Abdulaziz Gate Access', 'Panoramic Kaaba View', 'Al Masharef Tea Lounge'],
   },
   {
     id: '3',
     name: 'Dar Al Taqwa Hotel Madinah',
+    tagline: 'Serenity Facing King Fahd Gate & Ladies Entrance',
     city: 'Madinah Al-Munawwarah',
-    area: 'Northern Central Area',
-    rating: 5,
+    location: 'Northern Central Area, Prophet Mosque',
     distanceMeters: 0,
     walkingMin: 1,
     hasKaabaView: false,
@@ -55,14 +67,19 @@ const SAMPLE_REAL_HOTELS = [
     views: 980,
     likes: 115,
     image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
-    amenities: ['Facing Ladies Gate', 'Direct Courtyard Access', 'VIP Airport Transfer'],
+    description: 'Located directly at the boundary of Masjid an-Nabawi courtyard facing the main ladies gate with direct spiritual peace.',
+    rooms: [
+      { name: 'Prophet Mosque Courtyard Suite', price: 2100, capacity: 3, beds: '1 King + 1 Single' },
+      { name: 'Deluxe Twin Room', price: 1600, capacity: 2, beds: '2 Single Beds' },
+    ],
+    features: ['Direct Courtyard Access', 'Facing Ladies Gate', 'Madinah Live Audio', 'VIP Lounge'],
   },
   {
     id: '4',
     name: 'The Oberoi Madinah',
+    tagline: 'Unrivaled Luxury Facing the Green Dome',
     city: 'Madinah Al-Munawwarah',
-    area: 'Masjid an-Nabawi Courtyard',
-    rating: 5,
+    location: 'Northern Central Courtyard',
     distanceMeters: 20,
     walkingMin: 2,
     hasKaabaView: false,
@@ -71,237 +88,298 @@ const SAMPLE_REAL_HOTELS = [
     views: 730,
     likes: 87,
     image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80',
-    amenities: ['Green Dome Views', 'Private Butler Service', '5 Halal Restaurants'],
+    description: 'The epitome of Madinah luxury hospitality, offering unhindered views of the Prophet’s Mosque and handcrafted luxury suites.',
+    rooms: [
+      { name: 'Royal Green Dome Suite', price: 3200, capacity: 4, beds: '2 King Beds' },
+      { name: 'Executive Courtyard Room', price: 2400, capacity: 2, beds: '1 King Bed' },
+    ],
+    features: ['Green Dome Views', '5 Halal Fine-Dining Restaurants', 'Private Butler Service'],
   },
 ];
 
 export default function ModernDesignDemo() {
   const [selectedCity, setSelectedCity] = useState('all');
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedHotel, setSelectedHotel] = useState<typeof MODERN_HOTELS[0] | null>(null);
+  const [likesCount, setLikesCount] = useState<{ [key: string]: number }>({
+    '1': 148,
+    '2': 92,
+    '3': 115,
+    '4': 87,
+  });
 
-  const filteredHotels = SAMPLE_REAL_HOTELS.filter((hotel) => {
-    if (selectedCity === 'Makkah' && !hotel.city.includes('Makkah')) return false;
-    if (selectedCity === 'Madinah' && !hotel.city.includes('Madinah')) return false;
-    if (activeFilter === 'kaaba' && !hotel.hasKaabaView) return false;
-    if (activeFilter === 'closest' && hotel.distanceMeters > 50) return false;
+  const toggleLike = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLikesCount((prev) => ({
+      ...prev,
+      [id]: prev[id] + 1,
+    }));
+  };
+
+  const filteredHotels = MODERN_HOTELS.filter((h) => {
+    if (selectedCity === 'Makkah' && !h.city.includes('Makkah')) return false;
+    if (selectedCity === 'Madinah' && !h.city.includes('Madinah')) return false;
+    if (activeTab === 'kaaba' && !h.hasKaabaView) return false;
+    if (activeTab === 'courtyard' && h.distanceMeters > 20) return false;
     return true;
   });
 
   return (
-    <div className="min-h-screen bg-stone-100 text-stone-900 font-sans">
+    <div className="min-h-screen bg-stone-50 text-stone-900 font-sans selection:bg-amber-400 selection:text-stone-950">
       <ThemeDemoNav />
 
-      {/* Modern Top Header */}
-      <header className="bg-stone-950 text-white border-b border-stone-800">
+      {/* Modern Minimalist Navigation Header */}
+      <header className="bg-white/95 backdrop-blur-md border-b border-stone-200 sticky top-11 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-stone-950 shadow-md font-bold">
-              <Compass className="w-6 h-6" />
+            <div className="w-10 h-10 rounded-full bg-stone-950 flex items-center justify-center text-amber-400 font-bold border border-amber-400/40 shadow">
+              H
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-white flex items-center gap-2 font-serif">
-                HARAMAIN <span className="text-amber-400 font-sans text-xs font-semibold px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/30">MODERN LUXURY</span>
+              <span className="text-xl font-bold tracking-tight text-stone-950 font-serif">
+                HARAMAIN <span className="text-amber-600 font-sans text-xs font-semibold uppercase tracking-wider">MODERN</span>
               </span>
-              <p className="text-xs text-stone-400">Exclusive Makkah & Madinah Sanctuary Stays</p>
+              <p className="text-[11px] text-stone-500">Curated 5-Star Pilgrimage Hospitality</p>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-6 text-sm">
-            <button onClick={() => setSelectedCity('all')} className={`transition-colors ${selectedCity === 'all' ? 'text-amber-400 font-semibold' : 'text-stone-400 hover:text-white'}`}>All Sanctuaries</button>
-            <button onClick={() => setSelectedCity('Makkah')} className={`transition-colors ${selectedCity === 'Makkah' ? 'text-amber-400 font-semibold' : 'text-stone-400 hover:text-white'}`}>Makkah Al-Mukarramah</button>
-            <button onClick={() => setSelectedCity('Madinah')} className={`transition-colors ${selectedCity === 'Madinah' ? 'text-amber-400 font-semibold' : 'text-stone-400 hover:text-white'}`}>Madinah Al-Munawwarah</button>
+          <div className="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-stone-600">
+            <button onClick={() => setSelectedCity('all')} className={`transition-colors ${selectedCity === 'all' ? 'text-stone-950 font-bold border-b-2 border-stone-950 pb-1' : 'hover:text-stone-950'}`}>All Stays</button>
+            <button onClick={() => setSelectedCity('Makkah')} className={`transition-colors ${selectedCity === 'Makkah' ? 'text-stone-950 font-bold border-b-2 border-stone-950 pb-1' : 'hover:text-stone-950'}`}>Makkah Al-Mukarramah</button>
+            <button onClick={() => setSelectedCity('Madinah')} className={`transition-colors ${selectedCity === 'Madinah' ? 'text-stone-950 font-bold border-b-2 border-stone-950 pb-1' : 'hover:text-stone-950'}`}>Madinah Al-Munawwarah</button>
           </div>
 
-          <Link href="/admin" className="px-4 py-2 text-xs font-bold rounded-lg bg-stone-900 hover:bg-stone-800 text-amber-400 border border-amber-400/30 transition-all">
-            Admin Panel
+          <Link href="/admin" className="px-4 py-2 text-xs font-bold rounded-full bg-stone-950 hover:bg-stone-800 text-amber-400 transition-all shadow-sm">
+            Admin Suite
           </Link>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-stone-950 via-stone-900 to-stone-800 text-white pt-16 pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:24px_24px]" />
-        
-        <div className="max-w-7xl mx-auto relative z-10 text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-semibold tracking-wider uppercase">
-            <Sparkles className="w-3.5 h-3.5" /> Concept 1: Modern Minimalist Luxury
-          </div>
+      {/* Split Editorial Hero Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div className="lg:col-span-6 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-stone-800 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>Modern Minimalist Luxury • Concept 1</span>
+            </div>
 
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight font-serif">
-            Elevate Your Pilgrimage in <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500">Pure Serenity</span>
-          </h1>
-          <p className="text-stone-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-            Curated 5-star suites facing the Holy Kaaba and Masjid an-Nabawi with live Haram audio and seamless pilgrim concierge.
-          </p>
+            <h1 className="text-4xl sm:text-6xl font-normal text-stone-950 tracking-tight leading-[1.1] font-serif">
+              A serene sanctuary facing the <span className="italic font-normal underline decoration-amber-400 decoration-2">Holy Sanctuary</span>.
+            </h1>
 
-          {/* Floating Minimalist Search Bar (Gold, Black, White, Grey) */}
-          <div className="max-w-4xl mx-auto bg-white p-3 sm:p-4 rounded-2xl shadow-2xl border border-stone-200 text-stone-900 grid grid-cols-1 sm:grid-cols-4 gap-3 text-left">
-            
-            <div className="p-2.5 rounded-xl hover:bg-stone-50 border border-transparent hover:border-stone-200 transition-all">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1">
-                <MapPin className="w-3 h-3 text-amber-600" /> Sanctuary City
-              </label>
-              <select 
-                value={selectedCity} 
-                onChange={(e) => setSelectedCity(e.target.value)}
-                className="w-full mt-1 text-sm font-semibold bg-transparent focus:outline-none text-stone-900 cursor-pointer"
+            <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-lg">
+              Explore handpicked luxury suites in Makkah and Madinah with guaranteed Haram audio, private courtyard access, and VIP pilgrim amenities.
+            </p>
+
+            {/* Quick Filter Pill Buttons */}
+            <div className="flex flex-wrap gap-2 pt-2">
+              <button
+                onClick={() => setActiveTab('all')}
+                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                  activeTab === 'all'
+                    ? 'bg-stone-950 text-white shadow-md'
+                    : 'bg-white border border-stone-300 text-stone-700 hover:border-stone-900'
+                }`}
               >
-                <option value="all">All Holy Cities</option>
-                <option value="Makkah">Makkah Al-Mukarramah</option>
-                <option value="Madinah">Madinah Al-Munawwarah</option>
-              </select>
-            </div>
-
-            <div className="p-2.5 rounded-xl hover:bg-stone-50 border border-transparent hover:border-stone-200 transition-all">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1">
-                <Calendar className="w-3 h-3 text-amber-600" /> Pilgrimage Dates
-              </label>
-              <p className="text-sm font-semibold text-stone-900 mt-1">Oct 18 – Oct 25, 2026</p>
-            </div>
-
-            <div className="p-2.5 rounded-xl hover:bg-stone-50 border border-transparent hover:border-stone-200 transition-all">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1">
-                <Users className="w-3 h-3 text-amber-600" /> Pilgrims & Rooms
-              </label>
-              <p className="text-sm font-semibold text-stone-900 mt-1">2 Adults, 1 Suite</p>
-            </div>
-
-            <div className="flex items-center">
-              <button className="w-full h-full py-3.5 px-6 rounded-xl bg-stone-950 hover:bg-stone-900 text-amber-400 font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all border border-amber-500/30">
-                <Search className="w-4 h-4" /> Explore Stays
+                All Sanctuaries ({MODERN_HOTELS.length})
+              </button>
+              <button
+                onClick={() => setActiveTab('kaaba')}
+                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  activeTab === 'kaaba'
+                    ? 'bg-amber-500 text-stone-950 font-bold shadow-md'
+                    : 'bg-white border border-stone-300 text-stone-700 hover:border-stone-900'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-600" /> Kaaba View Only
+              </button>
+              <button
+                onClick={() => setActiveTab('courtyard')}
+                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  activeTab === 'courtyard'
+                    ? 'bg-stone-950 text-white shadow-md'
+                    : 'bg-white border border-stone-300 text-stone-700 hover:border-stone-900'
+                }`}
+              >
+                <Footprints className="w-3.5 h-3.5 text-amber-500" /> Direct Courtyard (0–20m)
               </button>
             </div>
-
           </div>
+
+          {/* Featured Editorial Card */}
+          <div className="lg:col-span-6 relative">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-stone-900 group">
+              <img
+                src={MODERN_HOTELS[0].image}
+                alt="Fairmont Makkah"
+                className="w-full h-[420px] object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              
+              <div className="absolute top-4 left-4 flex gap-2">
+                <span className="bg-amber-400 text-stone-950 text-xs font-bold px-3 py-1 rounded-full shadow">
+                  Featured Landmark
+                </span>
+                <span className="bg-white/90 backdrop-blur-md text-stone-900 text-xs font-semibold px-3 py-1 rounded-full">
+                  0m to Kaaba
+                </span>
+              </div>
+
+              <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
+                <div className="flex items-center gap-1 text-amber-400 text-xs">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+                  ))}
+                  <span className="text-white ml-1 font-semibold">5.0 (1,250 views)</span>
+                </div>
+                <h3 className="text-2xl font-bold font-serif">{MODERN_HOTELS[0].name}</h3>
+                <p className="text-xs text-stone-300 line-clamp-2">{MODERN_HOTELS[0].description}</p>
+                <div className="pt-2 flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-stone-400">Starting from</span>{' '}
+                    <span className="text-xl font-bold text-amber-400">SAR {MODERN_HOTELS[0].price}</span>
+                    <span className="text-xs text-stone-400"> /night</span>
+                  </div>
+                  <button
+                    onClick={() => setSelectedHotel(MODERN_HOTELS[0])}
+                    className="px-5 py-2.5 rounded-full bg-white hover:bg-amber-400 hover:text-stone-950 text-stone-950 text-xs font-bold transition-all shadow"
+                  >
+                    Quick Preview
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* Modern Filter Pill Bar */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
-        <div className="bg-stone-900 p-2.5 rounded-2xl border border-stone-800 shadow-xl flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-stone-400 font-semibold px-2">Filter By:</span>
-            
-            <button 
-              onClick={() => setActiveFilter('all')}
-              className={`px-3.5 py-1.5 rounded-xl font-semibold transition-all ${
-                activeFilter === 'all' 
-                  ? 'bg-amber-400 text-stone-950 shadow-md' 
-                  : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-              }`}
+      {/* Floating Minimalist Search Pill (Gold, Black, White, Grey) */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+        <div className="bg-white rounded-2xl shadow-xl border border-stone-200 p-3 grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
+          
+          <div className="px-3 py-2 border-r border-stone-100">
+            <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block flex items-center gap-1">
+              <MapPin className="w-3 h-3 text-amber-600" /> City
+            </label>
+            <select
+              value={selectedCity}
+              onChange={(e) => setSelectedCity(e.target.value)}
+              className="w-full text-sm font-semibold text-stone-900 bg-transparent focus:outline-none cursor-pointer mt-0.5"
             >
-              All Hotels ({SAMPLE_REAL_HOTELS.length})
-            </button>
+              <option value="all">All Sanctuaries</option>
+              <option value="Makkah">Makkah Al-Mukarramah</option>
+              <option value="Madinah">Madinah Al-Munawwarah</option>
+            </select>
+          </div>
 
-            <button 
-              onClick={() => setActiveFilter('kaaba')}
-              className={`px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center gap-1.5 ${
-                activeFilter === 'kaaba' 
-                  ? 'bg-amber-400 text-stone-950 shadow-md' 
-                  : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-              }`}
-            >
-              <Sparkles className="w-3 h-3" /> Kaaba View Suites
-            </button>
+          <div className="px-3 py-2 border-r border-stone-100">
+            <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block flex items-center gap-1">
+              <Calendar className="w-3 h-3 text-amber-600" /> Season
+            </label>
+            <span className="text-sm font-semibold text-stone-900 block mt-0.5">Umrah & Ramadan 1448</span>
+          </div>
 
-            <button 
-              onClick={() => setActiveFilter('closest')}
-              className={`px-3.5 py-1.5 rounded-xl font-semibold transition-all flex items-center gap-1.5 ${
-                activeFilter === 'closest' 
-                  ? 'bg-amber-400 text-stone-950 shadow-md' 
-                  : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-              }`}
-            >
-              <Footprints className="w-3 h-3" /> Direct Courtyard (0-50m)
+          <div className="px-3 py-2">
+            <label className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block flex items-center gap-1">
+              <Users className="w-3 h-3 text-amber-600" /> Guests
+            </label>
+            <span className="text-sm font-semibold text-stone-900 block mt-0.5">2 Adults • 1 Suite</span>
+          </div>
+
+          <div>
+            <button className="w-full py-3.5 px-6 rounded-xl bg-stone-950 hover:bg-stone-900 text-amber-400 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md">
+              <Search className="w-4 h-4" /> Search Available Stays
             </button>
           </div>
 
-          <div className="text-stone-400 text-xs hidden sm:block">
-            Showing <strong className="text-white">{filteredHotels.length}</strong> verified sanctuaries
-          </div>
         </div>
       </section>
 
-      {/* Modern Hotel Cards Grid */}
+      {/* Modern Hotel Cards Collection */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <span className="text-xs uppercase tracking-widest text-amber-600 font-bold">Curated Sanctuary Stays</span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-stone-950 font-serif mt-1">
+              Verified 5-Star Accommodations
+            </h2>
+          </div>
+          <span className="text-xs text-stone-500 font-medium hidden sm:block">
+            Showing {filteredHotels.length} luxury stays
+          </span>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredHotels.map((hotel) => (
-            <div 
+            <div
               key={hotel.id}
-              className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col group hover:-translate-y-1.5"
+              onClick={() => setSelectedHotel(hotel)}
+              className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer hover:-translate-y-1"
             >
-              {/* Hotel Image with Badges */}
-              <div className="relative h-56 w-full overflow-hidden bg-stone-900">
-                <img 
-                  src={hotel.image} 
-                  alt={hotel.name} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95" 
+              <div className="relative h-52 w-full overflow-hidden bg-stone-100">
+                <img
+                  src={hotel.image}
+                  alt={hotel.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-black/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                {/* Top Badges */}
-                <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
+                <div className="absolute top-3 left-3 flex flex-col gap-1 z-10">
                   {hotel.hasKaabaView && (
-                    <span className="bg-amber-400 text-stone-950 font-bold text-[11px] px-2.5 py-0.5 rounded-md flex items-center gap-1 shadow">
-                      <Sparkles className="w-3 h-3" /> Kaaba View
+                    <span className="bg-amber-400 text-stone-950 font-bold text-[10px] px-2.5 py-0.5 rounded-full shadow">
+                      Kaaba View
                     </span>
                   )}
                   {hotel.hasHaramView && !hotel.hasKaabaView && (
-                    <span className="bg-stone-900/90 text-amber-300 border border-amber-400/40 font-semibold text-[11px] px-2.5 py-0.5 rounded-md shadow">
+                    <span className="bg-stone-900/90 text-amber-300 font-semibold text-[10px] px-2.5 py-0.5 rounded-full shadow">
                       Haram View
                     </span>
                   )}
                 </div>
 
-                <div className="absolute top-3 right-3 z-10">
-                  <span className="p-2 rounded-full bg-stone-950/70 backdrop-blur-md text-stone-300 flex items-center gap-1 text-xs">
-                    <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> {hotel.likes}
-                  </span>
-                </div>
+                <button
+                  onClick={(e) => toggleLike(hotel.id, e)}
+                  className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/90 hover:bg-white text-stone-700 hover:text-rose-600 transition-all shadow"
+                >
+                  <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
+                </button>
 
-                {/* Bottom Overlay on Image */}
                 <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center text-white text-xs">
-                  <span className="bg-stone-950/90 backdrop-blur-md px-2.5 py-1 rounded-md flex items-center gap-1.5 border border-stone-800 text-[11px] text-amber-300">
-                    <Footprints className="w-3 h-3 text-amber-400" />
+                  <span className="bg-stone-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[11px] text-amber-300 font-medium">
                     {hotel.distanceMeters === 0 ? '0m Courtyard' : `${hotel.distanceMeters}m (${hotel.walkingMin} min)`}
                   </span>
-                  <div className="flex items-center gap-0.5 bg-stone-950/90 px-2 py-1 rounded-md text-[11px] text-amber-400 border border-stone-800">
-                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> 5.0
-                  </div>
+                  <span className="text-[11px] text-stone-300 flex items-center gap-1">
+                    <Eye className="w-3 h-3" /> {hotel.views}
+                  </span>
                 </div>
               </div>
 
-              {/* Card Body */}
-              <div className="p-5 flex flex-col flex-grow justify-between bg-white">
+              <div className="p-5 flex flex-col flex-grow justify-between">
                 <div>
-                  <div className="flex items-center gap-1 text-[11px] text-stone-500 font-medium mb-1">
-                    <MapPin className="w-3 h-3 text-amber-600" /> {hotel.city} • {hotel.area}
-                  </div>
-                  <h3 className="text-base font-bold text-stone-950 group-hover:text-amber-600 transition-colors line-clamp-1">
+                  <span className="text-[11px] text-stone-500 font-medium block mb-1">
+                    {hotel.city} • {hotel.location}
+                  </span>
+                  <h3 className="text-base font-bold text-stone-950 group-hover:text-amber-600 transition-colors font-serif line-clamp-1">
                     {hotel.name}
                   </h3>
-
-                  <div className="flex flex-wrap gap-1.5 mt-3">
-                    {hotel.amenities.map((amenity, i) => (
-                      <span key={i} className="text-[10px] bg-stone-100 text-stone-700 px-2 py-0.5 rounded font-medium border border-stone-200">
-                        {amenity}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="text-xs text-stone-500 line-clamp-2 mt-1.5 leading-relaxed">
+                    {hotel.tagline}
+                  </p>
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-stone-100 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider text-stone-500 font-bold block">Starting From</span>
-                    <span className="text-lg font-extrabold text-stone-950">
-                      SAR {hotel.price}
-                    </span>
-                    <span className="text-[11px] text-stone-500"> /night</span>
+                    <span className="text-[10px] uppercase tracking-wider text-stone-400 block font-semibold">From</span>
+                    <span className="text-lg font-bold text-stone-950">SAR {hotel.price}</span>
+                    <span className="text-[10px] text-stone-500"> /night</span>
                   </div>
 
-                  <button className="px-4 py-2 rounded-xl bg-stone-950 hover:bg-amber-500 hover:text-stone-950 text-white font-bold text-xs transition-all flex items-center gap-1 shadow">
-                    Book <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  <span className="px-3.5 py-1.5 rounded-full bg-stone-100 group-hover:bg-stone-950 group-hover:text-amber-400 text-stone-800 text-xs font-bold transition-all flex items-center gap-1">
+                    View <ChevronRight className="w-3.5 h-3.5" />
+                  </span>
                 </div>
               </div>
             </div>
@@ -309,42 +387,99 @@ export default function ModernDesignDemo() {
         </div>
       </section>
 
-      {/* Modern Luxury Highlights */}
-      <section className="bg-stone-950 text-white py-16 border-t border-stone-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
-                <Moon className="w-6 h-6" />
+      {/* Interactive Quick-View Slide Drawer Modal */}
+      {selectedHotel && (
+        <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-xl bg-white h-full shadow-2xl overflow-y-auto p-6 flex flex-col justify-between">
+            <div className="space-y-6">
+              
+              <div className="flex items-center justify-between border-b border-stone-200 pb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
+                  {selectedHotel.city}
+                </span>
+                <button
+                  onClick={() => setSelectedHotel(null)}
+                  className="p-1.5 rounded-full hover:bg-stone-100 text-stone-600 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-              <h4 className="text-lg font-bold font-serif text-white">Live Haram Audio Streaming</h4>
-              <p className="text-xs text-stone-400 leading-relaxed">
-                Connect seamlessly to live Adhan and Imam recitations directly inside your private suite.
-              </p>
+
+              <div className="rounded-2xl overflow-hidden h-56 relative">
+                <img
+                  src={selectedHotel.image}
+                  alt={selectedHotel.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-3 left-3 bg-stone-950 text-amber-400 text-xs font-bold px-3 py-1 rounded-full">
+                  {selectedHotel.distanceMeters === 0 ? '0m Direct Courtyard' : `${selectedHotel.distanceMeters}m walk`}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold text-stone-950 font-serif">{selectedHotel.name}</h3>
+                <p className="text-xs text-stone-500 mt-1">{selectedHotel.location}</p>
+                <p className="text-sm text-stone-700 mt-3 leading-relaxed">{selectedHotel.description}</p>
+              </div>
+
+              {/* Pilgrim Amenities */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 mb-2">Pilgrim Amenities</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {selectedHotel.features.map((feat, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-stone-700 p-2 rounded-lg bg-stone-50 border border-stone-200">
+                      <Check className="w-3.5 h-3.5 text-amber-600" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Available Rooms List */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 mb-2">Available Suites</h4>
+                <div className="space-y-2">
+                  {selectedHotel.rooms.map((room, i) => (
+                    <div key={i} className="p-3.5 rounded-xl border border-stone-200 hover:border-stone-900 transition-all flex items-center justify-between">
+                      <div>
+                        <h5 className="text-sm font-bold text-stone-950">{room.name}</h5>
+                        <p className="text-xs text-stone-500">{room.beds} • Max {room.capacity} Guests</p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-base font-bold text-stone-950 block">SAR {room.price}</span>
+                        <span className="text-[10px] text-stone-400">/night</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
 
-            <div className="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h4 className="text-lg font-bold font-serif text-white">100% Halal Gourmet & Dining</h4>
-              <p className="text-xs text-stone-400 leading-relaxed">
-                World-class executive dining certified halal, featuring authentic Saudi and international cuisines.
-              </p>
+            <div className="pt-6 border-t border-stone-200 mt-6 flex items-center gap-3">
+              <button
+                onClick={() => alert(`Booking initiated for ${selectedHotel.name}`)}
+                className="w-full py-4 rounded-xl bg-stone-950 hover:bg-stone-900 text-amber-400 font-bold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2"
+              >
+                Proceed to Reservation <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
 
-            <div className="p-6 rounded-2xl bg-stone-900 border border-stone-800 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
-                <Footprints className="w-6 h-6" />
-              </div>
-              <h4 className="text-lg font-bold font-serif text-white">Direct Piazza & Gate Access</h4>
-              <p className="text-xs text-stone-400 leading-relaxed">
-                Zero-minute walks to King Abdulaziz Gate and Prophet's Mosque courtyards with wheelchair assistance.
-              </p>
-            </div>
           </div>
         </div>
-      </section>
+      )}
+
+      {/* Modern Footer */}
+      <footer className="bg-stone-950 text-stone-400 py-12 border-t border-stone-800 text-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p>© {new Date().getFullYear()} Haramain Modern Luxury. Concept 1 of 3.</p>
+          <div className="flex items-center gap-4">
+            <Link href="/demo/classic" className="text-amber-400 hover:underline">View Concept 2 (Classic Royal) →</Link>
+            <Link href="/demo/futuristic" className="text-amber-400 hover:underline">View Concept 3 (Futuristic HUD) →</Link>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }
