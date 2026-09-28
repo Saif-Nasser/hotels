@@ -9,31 +9,31 @@ export default function ThemeDemoNav() {
 
   const themes = [
     {
-      name: 'Modern Luxury',
+      name: '1. Modern',
+      shortName: 'Modern',
       href: '/demo/modern',
       icon: Sparkles,
-      color: 'from-amber-400 to-amber-600',
     },
     {
-      name: 'Classic Royal',
+      name: '2. Classic',
+      shortName: 'Classic',
       href: '/demo/classic',
       icon: Crown,
-      color: 'from-amber-300 to-amber-500',
     },
     {
-      name: 'Futuristic HUD',
+      name: '3. Futuristic',
+      shortName: 'Futuristic',
       href: '/demo/futuristic',
       icon: Cpu,
-      color: 'from-amber-400 to-amber-500',
     },
   ];
 
   return (
-    <div className="sticky top-0 z-50 bg-stone-950/95 backdrop-blur-md border-b border-amber-500/20 py-2.5 px-4 shadow-xl">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+    <div className="sticky top-0 z-50 bg-stone-950/95 backdrop-blur-md border-b border-amber-500/20 py-2 px-3 sm:px-4 shadow-xl">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
         
         {/* Left: Design Switcher Title & Home */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <Link
             href="/demo"
             className="text-stone-400 hover:text-white p-1 rounded-md hover:bg-stone-900 transition-colors"
@@ -41,16 +41,16 @@ export default function ThemeDemoNav() {
           >
             <Home className="w-4 h-4" />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-            <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
-              Gold • Black • Grey • White Concepts
+            <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-amber-400">
+              Designs: Gold • Black • Grey • White
             </span>
           </div>
         </div>
 
-        {/* Right: 3 Concept Tabs */}
-        <div className="flex items-center gap-1.5 bg-stone-900 p-1 rounded-xl border border-stone-800">
+        {/* Right: 3 Concept Tabs (Responsive wrapping) */}
+        <div className="flex items-center gap-1 bg-stone-900 p-1 rounded-xl border border-stone-800 w-full sm:w-auto justify-center">
           {themes.map((theme) => {
             const Icon = theme.icon;
             const isActive = pathname === theme.href;
@@ -58,14 +58,15 @@ export default function ThemeDemoNav() {
               <Link
                 key={theme.href}
                 href={theme.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex-1 sm:flex-initial justify-center ${
                   isActive
-                    ? 'bg-gradient-to-r from-amber-400 to-amber-600 text-stone-950 shadow-md scale-105'
+                    ? 'bg-gradient-to-r from-amber-400 to-amber-600 text-stone-950 shadow-md font-extrabold'
                     : 'text-stone-400 hover:text-white hover:bg-stone-800'
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-stone-950' : 'text-amber-400'}`} />
-                <span>{theme.name}</span>
+                <span className="hidden sm:inline">{theme.name}</span>
+                <span className="sm:hidden">{theme.shortName}</span>
               </Link>
             );
           })}
